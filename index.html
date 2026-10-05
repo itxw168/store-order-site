@@ -1,0 +1,2034 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <!-- MOBILE CRITICAL: viewport-fit=cover supports notch + full-width swipe on iOS/Android -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5.0" />
+  <meta name="theme-color" content="#72D0FF" />
+  <meta name="description" content="Bienvenido a Haven Shop✨ Contamos con merch de K-pop, articulos de anime japones, peluches divertidos, llaveros y mucho mas." />
+  <title>Haven Shop ✨ Catálogo Anime</title>
+
+  <!-- =======================================================
+       Favicon + OG meta (logo processed from 店铺名和LOGO.jpg)
+       ======================================================= -->
+  <link rel="icon" type="image/png" sizes="128x128" href="favicon-128.png" />
+  <link rel="shortcut icon" type="image/png" href="favicon-128.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon-128.png" />
+
+  <!-- Open Graph / share card – shown when you paste the URL in WhatsApp / Telegram / X / etc -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:site_name"   content="Haven Shop" />
+  <meta property="og:title"       content="Haven Shop ✨ Catálogo Anime" />
+  <meta property="og:description" content="Bienvenido a Haven Shop✨ Contamos con merch de K-pop, articulos de anime japones, peluches divertidos, llaveros y mucho mas." />
+  <meta property="og:image"       content="og-image.jpg" />
+  <meta property="og:locale"      content="es_MX" />
+  <meta property="og:locale:alternate" content="zh_CN" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Haven Shop ✨ Catálogo Anime" />
+  <meta name="twitter:description" content="Bienvenido a Haven Shop✨ Contamos con merch de K-pop, articulos de anime japones, peluches divertidos, llaveros y mucho mas." />
+  <meta name="twitter:image"       content="og-image.jpg" />
+
+  <!-- ============================================================
+       Tailwind CSS CDN (always-available fallback via dual CDNs)
+       ============================================================ -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    /* Tailwind Play CDN config — 软萌马卡龙色调（主色 #72D0FF 清透浅天蓝） */
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'macaron-sky':      '#72D0FF',   /* 主色：清透浅天蓝 */
+            'macaron-milk':     '#FFFDF8',   /* 奶白 */
+            'macaron-mint':     '#CFF0E3',   /* 浅薄荷青 */
+            'macaron-goose':    '#FFF4B5',   /* 鹅黄 */
+            'macaron-pink':     '#FFD6E7',   /* 浅粉 */
+            'macaron-lilac':    '#E0D1FB',   /* 淡紫 */
+            'macaron-cream':    '#FFFDF6',
+            'macaron-peach':    '#FFE4C8',
+            'macaron-bluedeep': '#5AB4F0',
+            'macaron-purpledeep':'#B8A4F3',
+          },
+          fontFamily: {
+            cute:   ['"Comic Sans MS"', '"Quicksand"', '"Baloo 2"', 'system-ui', 'sans-serif'],
+            body:   ['system-ui', '-apple-system', '"Segoe UI"', 'Roboto', 'sans-serif'],
+          },
+          boxShadow: {
+            'soft':   '0 10px 30px -12px rgba(114, 192, 240, 0.28)',
+            'pop':    '0 6px 0 -2px rgba(140, 120, 180, 0.22), 0 10px 20px -10px rgba(140,120,180,.35)',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* ===== Global base ===== */
+    html, body { height: 100%; }
+    body {
+      font-family: theme('fontFamily.body');
+      /* 水彩渐变背景：顶部清透浅天蓝 → 中部奶青 → 底部鹅黄淡黄；多 radial 叠加避免生硬分割线 */
+      background:
+        radial-gradient(1200px 700px at 12% -8%,  #BFE7FF 0%, transparent 58%),
+        radial-gradient(1100px 620px at 110% 6%,   #D9F1E5 0%, transparent 60%),
+        radial-gradient(1400px 700px at 50% 18%,   #EAF6FF 0%, transparent 65%),
+        radial-gradient(900px  600px at 8%  78%,   #EAF9D6 0%, transparent 62%),
+        radial-gradient(900px  580px at 92% 88%,   #FFF4B5 0%, transparent 62%),
+        radial-gradient(800px  500px at 50% 108%,  #FFF1B8 0%, transparent 60%),
+        linear-gradient(180deg, #EAF6FF 0%, #F4FBEE 50%, #FFF7DA 100%);
+      background-attachment: fixed;
+      color: #2e4660;
+      min-height: 100vh;
+      /* safe area padding for iOS notches */
+      padding-top:    env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+      padding-left:   env(safe-area-inset-left);
+      padding-right:  env(safe-area-inset-right);
+    }
+
+    /* ===== 星光点缀：稀疏、大小不一、微弱朦胧发光；不遮挡文字与商品 ===== */
+    .star-field { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .star-field::before, .star-field::after,
+    .star-field span {
+      content: '✦';
+      position: absolute;
+      color: #fff;
+      text-shadow:
+        0 0 4px rgba(255,255,255,.85),
+        0 0 8px rgba(180,225,255,.55);
+      opacity: .55;
+      font-family: serif;
+      pointer-events: none;
+    }
+    .star-field::before {
+      top: 12%;  left: 6%;   font-size: 14px; opacity:.6;
+    }
+    .star-field::after {
+      top: 8%;   right: 18%; font-size: 10px; opacity:.5;
+    }
+    .star-field span { font-size: 12px; opacity:.55; }
+    .star-field .s1 { top: 22%;  left: 78%; font-size: 11px; opacity:.45; }
+    .star-field .s2 { top: 35%;  left: 12%; font-size: 9px;  opacity:.5;  }
+    .star-field .s3 { top: 42%;  left: 92%; font-size: 13px; opacity:.55; }
+    .star-field .s4 { top: 55%;  left: 4%;  font-size: 10px; opacity:.4;  }
+    .star-field .s5 { top: 62%;  left: 88%; font-size: 8px;  opacity:.5;  }
+    .star-field .s6 { top: 75%;  left: 18%; font-size: 12px; opacity:.5;  }
+    .star-field .s7 { top: 82%;  left: 70%; font-size: 9px;  opacity:.4;  }
+    .star-field .s8 { top: 88%;  left: 40%; font-size: 11px; opacity:.45; }
+    .star-field .s9 { top: 28%;  left: 48%; font-size: 7px;  opacity:.4;  }
+    .star-field .s10{ top: 48%;  left: 60%; font-size: 8px;  opacity:.35; }
+    .star-field .s11{ top: 68%;  left: 32%; font-size: 9px;  opacity:.4;  }
+    .star-field .s12{ top: 92%;  left: 8%;  font-size: 10px; opacity:.35; }
+    @media (prefers-reduced-motion: no-preference) {
+      .star-field::before, .star-field::after, .star-field span {
+        animation: starTwinkle 5.5s ease-in-out infinite;
+      }
+      .star-field .s2, .star-field .s5, .star-field .s8 { animation-delay: 1.2s; }
+      .star-field .s3, .star-field .s6, .star-field .s11{ animation-delay: 2.4s; }
+      .star-field .s4, .star-field .s9, .star-field .s12{ animation-delay: 3.6s; }
+    }
+    @keyframes starTwinkle {
+      0%, 100% { opacity: .35; transform: scale(.85); }
+      50%      { opacity: .65; transform: scale(1.05); }
+    }
+
+    /* floating decorative blobs */
+    .blob { position: fixed; border-radius: 50%; filter: blur(40px); opacity: .35; pointer-events: none; z-index: 0; }
+
+    /* ===== Product cards ===== */
+    .prod-card {
+      background: #fff;
+      border-radius: 1.4rem;
+      box-shadow: 0 12px 30px -16px rgba(114,192,240,.32);
+      border: 2px solid rgba(255,255,255,.92);
+      overflow: hidden;
+      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+      cursor: pointer;
+      touch-action: manipulation;   /* better mobile tap */
+    }
+    .prod-card:active { transform: scale(0.985); }
+    @media (hover: hover) {
+      .prod-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 22px 44px -18px rgba(114,192,240,.5);
+        border-color: rgba(114,208,255,.55);
+      }
+    }
+    /* 角标：现货 / 预售 / 余量 / 限量 / 通贩 / 尾款 */
+    .badge-corner {
+      position: absolute; top: .55rem; left: .55rem;
+      font-size: 10px; font-weight: 700; padding: 2px 8px;
+      border-radius: 9999px; letter-spacing: .02em;
+      box-shadow: 0 2px 6px -2px rgba(0,0,0,.18);
+      z-index: 3;
+    }
+    .bc-instock  { background:#D9F5E6; color:#047857; }   /* 现货 */
+    .bc-presale  { background:#FFE7C2; color:#92400E; }   /* 预售 */
+    .bc-remain   { background:#FFF1B8; color:#7A5A00; }   /* 余量 */
+    .bc-limited  { background:#FFD6E7; color:#B5396E; }   /* 限量 */
+    .bc-general  { background:#C8E0FF; color:#1E5BA8; }   /* 通贩 */
+    .bc-balance  { background:#E0D1FB; color:#6A3FB5; }   /* 尾款 */
+    .line-clamp-2 {
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .sku-tag { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: 0.02em; }
+
+    /* ===== Header (logo removed, language switcher in place) ===== */
+
+    /* ===== Category chip active ===== */
+    /*
+       IMPORTANT FIX for mobile:
+       Do NOT use outline + outline-offset here.
+       The #categoryChips container has overflow-x:auto for horizontal swipe,
+       and per CSS spec, overflow-x:auto forces overflow-y:hidden -> clips the
+       outline on top/bottom, making it look like the label is "covering" the
+       selected chip icon.
+
+       Solution: use LAYERED BOX-SHADOWS instead – box-shadows are NEVER clipped
+       by overflow:hidden and render perfectly outside the chip even if the
+       container clips content area. 2 shadow layers mimic outline:3 + offset:2:
+         0 0 0 2px #fff            – thin inner white ring (same as outline-offset gap)
+         0 0 0 5px rgba(...)      – the purple ring (3px outline + 2px offset = 5px)
+         0 8px 18px ...           – existing drop shadow (kept)
+    */
+    .cat-chip.active {
+      transform: translateY(-1px);
+      box-shadow:
+        0 0 0 2px #fff,
+        0 0 0 5px rgba(114,208,255,.7),
+        0 8px 18px -8px rgba(90,180,240,.45);
+    }
+    .cat-chip {
+      transition: transform .15s ease, box-shadow .15s ease, opacity .15s ease;
+      touch-action: manipulation;
+      min-height: 42px;           /* mobile-friendly tap target */
+    }
+    /* Hide scrollbar for horizontal scroll chips (keeps swipe function, hides ugly bars) */
+    .hide-scrollbar {
+      -ms-overflow-style: none !important;   /* IE and Edge */
+      scrollbar-width:    none !important;   /* Firefox */
+    }
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none !important;              /* Chrome, Safari, Opera, iOS Safari */
+      width: 0; height: 0;
+    }
+
+    /* Hide desktop-only keyboard hint on touch devices */
+    @media (hover: none) and (pointer: coarse) {
+      .keyboard-tip { display: none !important; }
+    }
+
+    /* ============================================================
+       ===  DEBUG: Force mobile layout on desktop preview  =========
+       Add class="is-mobile" to <body> (or in DevTools console run:
+         document.body.classList.add('is-mobile')
+       to preview all mobile CSS tweaks side-by-side with desktop.
+       ============================================================ */
+    @media (max-width: 768px) {
+      .prod-card { border-radius: 1.1rem; }
+    }
+    body.is-mobile .prod-card { border-radius: 1.1rem; }
+    /*
+       ========================================================
+       RULE #1: REAL SMALL SCREENS (<640px, matches Tailwind sm-1)
+       Same breakpoint where flex-nowrap + horizontal swipe kicks in
+       ======================================================== */
+    @media (max-width: 639.98px) {
+      .cat-chip {
+        /* === UNIFORM BUTTON SIZE: no more varying widths! === */
+        min-width: 92px !important;
+        max-width: 110px !important;
+        width: auto;
+        flex: 0 0 auto;
+        justify-content: center !important;
+        text-align: center !important;
+        font-size: 0.85rem !important;
+        padding: 0.55rem 0.6rem !important;
+        line-height: 1.25;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+      .cat-chip span:last-child {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        max-width: 84px;
+      }
+      /* === SWIPE HINT: shown inline on label row, centered === */
+      #scrollHint { display: inline-flex !important; }
+      /* === Hide 商品分类 text on phones (per user request) — free up the left "column" of our 3-col grid, hint still stays centered because 1fr columns have equal weight === */
+      #catLabel { display: none !important; }
+    }
+    /* very tiny phones (iPhone SE / 320px~380px): shrink chips a little */
+    @media (max-width: 380px) {
+      .cat-chip {
+        min-width: 80px !important;
+        max-width: 96px !important;
+        font-size: 0.78rem !important;
+        padding: 0.48rem 0.5rem !important;
+      }
+      .cat-chip span:last-child { max-width: 70px; }
+    }
+    /*
+       ========================================================
+       RULE #2: DESKTOP PREVIEW MODE (body.is-mobile class)
+       — NOT inside @media, so it works at ANY window width when
+       user adds .is-mobile class to <body> (DevTools preview).
+       ======================================================== */
+    body.is-mobile .cat-chip {
+      min-width: 92px !important;
+      max-width: 110px !important;
+      flex: 0 0 auto;
+      justify-content: center !important;
+      text-align: center !important;
+      font-size: 0.85rem !important;
+      padding: 0.55rem 0.6rem !important;
+      line-height: 1.25;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    body.is-mobile .cat-chip span:last-child {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      max-width: 84px;
+    }
+    body.is-mobile #scrollHint { display: inline-flex !important; }
+    body.is-mobile #catLabel { display: none !important; }   /* debug mode also hides category label text */
+    /* ---- Swipe hint base style (HIDDEN by default -> shown ONLY in <640px above)
+       Now lives on THE SAME ROW as #catLabel, perfectly centered in a 3-col grid.
+       => Remove all vertical margin-top/padding-top so it aligns FLUSH ("平齐")
+       with the label text instead of sitting below it as a separate paragraph.
+       ---- */
+    #scrollHint {
+      display: none;           /* hidden on desktop / tablet */
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      margin: 0;
+      padding: 0;
+      font-family: theme('fontFamily.cute');
+      font-weight: 700;        /* slightly bolder to match purple text */
+      font-size: 0.9rem;       /* was 0.78rem — per user: "字稍微大一点点" */
+      line-height: 1;
+      white-space: nowrap;
+      color: #6D5AA8;          /* vivid purple (Tailwind purple-700 family) — matches header brand color, per user "字体颜色就用紫色" */
+      opacity: 1;
+      user-select: none;
+    }
+    /* tiny animated arrows (subtle breathing swipe cue) */
+    #scrollHint .hint-arrow {
+      display: inline-block;
+      font-size: 1.15rem;      /* was 0.95rem — scaled up with text */
+      animation: swipeHintNudge 1.6s ease-in-out infinite;
+      opacity: 1;
+      color: #6D5AA8;          /* arrows also purple so they match text */
+    }
+    #scrollHint .hint-arrow.right { animation-delay: 0.8s; }
+    @keyframes swipeHintNudge {
+      0%,100% { transform: translateX(0);   opacity: 0.7; }
+      50%     { transform: translateX(3px); opacity: 1;   }
+    }
+    #scrollHint .hint-arrow.left  { animation-name: swipeHintNudgeLeft; }
+    #scrollHint .hint-arrow.right { animation-name: swipeHintNudgeRight; }
+    @keyframes swipeHintNudgeLeft {
+      0%,100% { transform: translateX(0);    opacity: 0.7; }
+      50%     { transform: translateX(-3px); opacity: 1;   }
+    }
+    @keyframes swipeHintNudgeRight {
+      0%,100% { transform: translateX(0);   opacity: 0.7; }
+      50%     { transform: translateX(3px); opacity: 1;   }
+    }
+
+    /* ================================================================
+       📸 社区好评 · 自动滚动跑马灯
+       结构：reviewsGrid(视窗) > reviewsTrack(双份内容轨道)
+       动画：track 向左平移 50%（= 一份内容宽度）后无限循环
+       悬停暂停；prefers-reduced-motion 时静止可横向滑动
+       ================================================================ */
+    .reviews-viewport {
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+              mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+    }
+    .reviews-track {
+      display: flex;
+      width: max-content;
+      animation: reviewsMarquee var(--marquee-dur, 36s) linear infinite;
+    }
+    .reviews-track:hover { animation-play-state: paused; }
+    .reviews-track > * { flex-shrink: 0; }
+    @keyframes reviewsMarquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .reviews-track { animation: none; }
+      .reviews-viewport { overflow-x: auto; }
+    }
+
+    /* ================================================================
+       🎨 MOBILE (< 640px) VISUAL POLISH — INCREMENTAL OVERRIDES ONLY
+       Per ExperienceRecall rule: NEVER touch display / position /
+       overflow / z-index / transform structural (only safe scale for
+       press feedback). Only padding / margin / radius / shadow /
+       color / font-size / line-height / background-gradient.
+       ================================================================ */
+    @media (max-width: 639.98px) {
+      /* ---------- 1. HEADER + LOGO: tighter, save vertical screen ---------- */
+      header {
+        padding: 1rem 1rem 0.75rem 1rem !important;
+      }
+      header > nav { gap: 0.9rem !important; }
+
+      /* ---------- 2. LANG SWITCHER: 2 buttons now, bigger tap, cuter pill ---------- */
+      #langSwitcher { padding: 0.2rem 0.3rem !important; gap: 0.2rem !important; }
+      .lang-btn { min-width: 42px !important; min-height: 34px !important; font-size: 0.82rem !important; }
+
+      /* ---------- 3. SEARCH BOX: "macaron jelly" style with pink focus glow ---------- */
+      #searchInput {
+        padding: 0.68rem 0.95rem 0.68rem 2.55rem !important;
+        border-radius: 9999px !important;
+        border: 2px solid #fff !important;
+        background: rgba(255, 255, 255, 0.97) !important;
+        box-shadow: 0 4px 14px -6px rgba(184, 164, 243, 0.45) !important;
+        font-size: 0.9rem !important;
+        transition: all .18s cubic-bezier(.2,.8,.2,1) !important;
+      }
+      #searchInput::placeholder { color: rgba(176, 165, 210, 0.82) !important; }
+      #searchInput:focus {
+        border-color: #FFC6DD !important;   /* macaron pink border */
+        box-shadow: 0 0 0 4px rgba(255, 214, 231, 0.55),
+                    0 5px 18px -6px rgba(184, 164, 243, 0.55) !important;
+        transform: translateY(-1px) scale(1.005);
+      }
+
+      /* ---------- 4. HERO: bigger punchy title, softer subtitle, more space ---------- */
+      #heroTitle {
+        font-size: 2rem !important;
+        line-height: 1.18 !important;
+        letter-spacing: -0.01em !important;
+        text-shadow: 0 2px 16px rgba(255, 182, 214, 0.38) !important;
+      }
+      #heroSubtitle {
+        font-size: 0.86rem !important;
+        line-height: 1.68 !important;
+        padding: 0.3rem 0.5rem 0 0.5rem !important;
+        color: rgba(109, 103, 136, 0.92) !important;
+        max-width: 96% !important;
+      }
+      /* hero wrapper (parent of #heroTitle): reduce top margin a bit for balance */
+      #heroTitle { margin-top: 1.5rem !important; }
+
+      /* ---------- 5. CATEGORY FILTER CARD: more glassy, bigger jelly radius ---------- */
+      #categorySection {
+        margin-top: 1.25rem !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+      }
+      #categorySection > div {   /* white glass wrapper */
+        padding: 0.9rem 0.85rem !important;
+        border-radius: 1.8rem !important;
+        border: 2.5px solid #fff !important;
+        background: linear-gradient(180deg, rgba(255,255,255,0.92) 0%, rgba(255, 246, 252, 0.9) 100%) !important;
+        box-shadow: 0 10px 30px -12px rgba(180, 155, 220, 0.45),
+                    0 0 0 1px rgba(255, 255, 255, 0.75) inset !important;
+      }
+      #catLabel {
+        /* hide category label text on phones per user request */
+        display: none !important;
+      }
+      #categoryChips {
+        gap: 0.5rem !important;
+        padding-top: 0.35rem !important;
+        padding-bottom: 0.22rem !important;
+      }
+      /*
+        Swipe hint text after hiding category label:
+        - Make it BIGGER (was 0.75rem, now 0.95rem)
+        - Purple color (brand purple-700, was soft lavender)
+      */
+      #scrollHint {
+        margin: 0 !important;
+        padding: 0.1rem 0 0 0 !important;
+        font-size: 0.95rem !important;
+        font-weight: 700 !important;
+        line-height: 1 !important;
+        color: #6D5AA8 !important;
+        opacity: 1 !important;
+      }
+      #scrollHint .hint-arrow {
+        font-size: 1.25rem !important;
+        animation-duration: 2.1s !important;
+        color: #6D5AA8 !important;
+      }
+
+      /* ---------- 6. STATS BAR: 2 stacked centered rows, never squishes ---------- */
+      section.max-w-7xl.mx-auto.mt-6 {   /* stats bar outer */
+        margin-top: 1.25rem !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+      }
+      section.max-w-7xl.mx-auto.mt-6 > div {
+        gap: 0.5rem !important;
+        justify-content: center !important;
+      }
+      #statsShowing {
+        width: 100% !important;
+        flex-basis: 100% !important;
+        text-align: center !important;
+        font-size: 0.82rem !important;
+        order: 1 !important;
+      }
+      #keyboardTip { display: none !important; }
+
+      /* ---------- 7. PRODUCT GRID + CARDS: jelly card look, pink view btn ---------- */
+      main.max-w-7xl {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+        margin-top: 1rem !important;
+      }
+      #productGrid {
+        gap: 0.85rem !important;
+      }
+      .prod-card {
+        border-radius: 1.35rem !important;
+        overflow: hidden !important;
+        background: linear-gradient(180deg, #ffffff 0%, #fffdfc 100%) !important;
+        box-shadow: 0 10px 24px -12px rgba(180, 155, 220, 0.42),
+                    0 0 0 1px rgba(255, 255, 255, 0.9) inset !important;
+        transition: transform .15s ease, box-shadow .15s ease !important;
+        border: 1.5px solid rgba(255, 255, 255, 0.95) !important;
+      }
+      .prod-card:active {
+        transform: scale(0.97) !important;
+        box-shadow: 0 5px 14px -8px rgba(180, 155, 220, 0.5) !important;
+      }
+      /* card image area – soft rounded top */
+      .prod-card > div:first-child {
+        background: linear-gradient(135deg, #FFF6F9 0%, #EEF3FF 55%, #F3EEFF 100%) !important;
+      }
+      /* card lower part */
+      .prod-card > div:nth-child(2) {
+        padding: 0.72rem 0.75rem 0.8rem 0.75rem !important;
+      }
+      /* badges: pill-shaped, more pad */
+      .prod-card .badge-instock,
+      .prod-card .badge-lowstock,
+      .prod-card .badge-outstock {
+        border-radius: 9999px !important;
+        padding: 0.25rem 0.65rem !important;
+        font-size: 0.72rem !important;
+        font-weight: 700 !important;
+      }
+      .prod-card h3 {
+        font-size: 0.84rem !important;
+        line-height: 1.45 !important;
+        margin-top: 0.4rem !important;
+      }
+      .sku-tag {
+        font-size: 0.68rem !important;
+        letter-spacing: 0.01em !important;
+      }
+      /* View button: pink macaron gradient + pill shape */
+      .prod-card button {
+        border-radius: 9999px !important;
+        padding: 0.38rem 0.9rem !important;
+        font-size: 0.78rem !important;
+        font-weight: 700 !important;
+        box-shadow: 0 4px 10px -4px rgba(255, 143, 184, 0.55) !important;
+        background: linear-gradient(135deg, #FFC1DD 0%, #FFD6E7 100%) !important;
+        color: #C2185B !important;
+        transition: all .12s ease !important;
+      }
+      .prod-card button:active {
+        transform: scale(0.95) !important;
+        box-shadow: 0 2px 6px -3px rgba(255, 143, 184, 0.5) !important;
+      }
+
+      /* ---------- 8. FOOTER: more padding, better readability ---------- */
+      footer { padding: 2rem 1rem 2.2rem !important; }
+      footer p { font-size: 0.8rem !important; letter-spacing: 0.01em !important; }
+
+      /* ---------- 9. BOTTOM SHEET MODAL: drag handle + ultra-round top ---------- */
+      .modal-card {
+        border-radius: 2.4rem 2.4rem 0 0 !important;
+        padding-top: 1.15rem !important;
+      }
+      /* visual drag handle (expected cue on bottom sheets, pure CSS no JS) */
+      .modal-card::before {
+        content: '';
+        display: block;
+        width: 44px;
+        height: 5px;
+        border-radius: 9999px;
+        background: rgba(184, 164, 243, 0.38);
+        margin: 0 auto 0.9rem auto !important;
+      }
+      #copySkuBtn {
+        border-radius: 9999px !important;
+        padding: 0.55rem 1.1rem !important;
+        font-weight: 700 !important;
+      }
+    }
+    /* Very tiny phones (<380px): reduce sizes proportionally even more after above */
+    @media (max-width: 380px) {
+      #heroTitle { font-size: 1.75rem !important; }
+      #heroSubtitle { font-size: 0.8rem !important; }
+      .prod-card h3 { font-size: 0.78rem !important; }
+    }
+
+    /* landscape mobile: make product hero & modal tighter */
+    @media (max-height: 500px) and (orientation: landscape) {
+      header > div { padding-top: 0.8rem !important; }
+      .hero-title { margin-top: 0.6rem !important; }
+      .modal-card { max-height: 95vh !important; padding: 1rem !important; }
+    }
+
+    /* ===== Stock badges ===== */
+    .badge-instock  { background: #D9F5E6; color: #047857; }   /* mint green  */
+    .badge-lowstock { background: #FFE7C2; color: #92400E; }   /* peach/amber */
+    .badge-outstock { background: #FFD6E7; color: #A03370; }   /* soft pink   */
+
+    /* ===== No results ===== */
+    .no-result {
+      text-align: center;
+      padding: 4.5rem 1.5rem;
+      color: #5A6F80;
+    }
+
+    /* ===== Modal ===== */
+    .modal-backdrop {
+      position: fixed; inset: 0;
+      background: rgba(46, 91, 138, 0.32);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      z-index: 60;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .22s ease;
+    }
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-card {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      background: linear-gradient(180deg, #FFFFFF 0%, #F4FBEE 100%);
+      border-radius: 2rem;
+      box-shadow: 0 30px 80px -25px rgba(60,120,180,.5);
+      border: 3px solid #fff;
+      max-height: 95vh;
+      overflow-y: auto;
+      transform: translateY(16px) scale(.98);
+      transition: transform .24s cubic-bezier(.2,.8,.2,1);
+    }
+    .modal-backdrop.open .modal-card { transform: translateY(0) scale(1); }
+
+    /* === Mobile: bottom sheet style instead of centered === */
+    @media (max-width: 640px) {
+      .modal-backdrop {
+        padding: 0 !important;
+        align-items: flex-end !important;
+      }
+      .modal-card {
+        max-width: 100% !important;
+        width: 100% !important;
+        max-height: 92vh !important;
+        border-radius: 1.5rem 1.5rem 0 0 !important;
+        padding-bottom: calc(1.3rem + env(safe-area-inset-bottom)) !important;
+        transform: translateY(100%);
+        animation: sheetUp .28s cubic-bezier(.2,.8,.2,1) forwards;
+      }
+      @keyframes sheetUp { to { transform: translateY(0); } }
+    }
+
+    /* ===== Language switcher button ===== */
+    .lang-btn {
+      font-family: theme('fontFamily.cute');
+      font-weight: 700;
+      transition: all .15s ease;
+      min-width: 36px;
+      min-height: 36px;
+    }
+    .lang-btn.active {
+      background: linear-gradient(135deg, #72D0FF, #5AB4F0);
+      color: #fff;
+      box-shadow: 0 4px 10px -4px rgba(90,180,240,.55);
+    }
+    .lang-btn:not(.active) {
+      background: #fff;
+      color: #2E5E80;
+      border: 1.5px solid rgba(114,208,255,.4);
+    }
+    .lang-btn:not(.active):active { transform: scale(0.95); }
+    /*
+      注意：前台不提供货币切换，货币由后台系统信息「站点全局单一货币」设置统一控制。
+      之前的 .cur-btn 样式已废弃移除，不再渲染任何切换按钮。
+    */
+
+    /* ===== V3 新增：榜单奖牌序号（金/银/铜渐变圆） ===== */
+    .rank-n {
+      width:30px;height:30px;border-radius:9999px;display:flex;align-items:center;justify-content:center;
+      font-family:'Comic Sans MS','Quicksand',sans-serif;font-weight:800;font-size:.95rem;color:#fff;flex-shrink:0;
+      box-shadow:0 2px 6px -2px rgba(0,0,0,.18); border:2px solid #fff;
+    }
+    .rank-1 { background:linear-gradient(135deg,#FFD166,#F4A100); }
+    .rank-2 { background:linear-gradient(135deg,#CBD5E1,#94A3B8); }
+    .rank-3 { background:linear-gradient(135deg,#F3B183,#C97B4A); }
+
+    /* ===== V3 新增：搜索框光晕玻璃壳 + 内嵌搜索按钮 ===== */
+    .search-shell{
+      box-shadow:0 12px 30px -12px rgba(114,208,255,.5), 0 2px 0 -1px rgba(140,120,180,.14);
+    }
+    .search-shell::before{
+      content:''; position:absolute; inset:-7px; border-radius:9999px; z-index:-1;
+      background:radial-gradient(closest-side, rgba(114,208,255,.38), rgba(224,209,251,.25) 65%, transparent);
+      filter:blur(7px);
+    }
+
+    /* ===== V3 新增：首页 / 目录页双视图切换 ===== */
+    .view-catalog[hidden] { display:none !important; }
+    .view-home[hidden] { display:none !important; }
+  </style>
+</head>
+
+<body>
+  <!-- 星光点缀背景层（稀疏、微弱朦胧发光、不遮挡文字与商品） -->
+  <div class="star-field" aria-hidden="true">
+    <span class="s1"></span><span class="s2"></span><span class="s3"></span>
+    <span class="s4"></span><span class="s5"></span><span class="s6"></span>
+    <span class="s7"></span><span class="s8"></span><span class="s9"></span>
+    <span class="s10"></span><span class="s11"></span><span class="s12"></span>
+  </div>
+  <!-- Decorative floating blobs -->
+  <div class="blob w-72 h-72 bg-macaron-pink    -top-16  -left-16"></div>
+  <div class="blob w-80 h-80 bg-macaron-sky     -top-10  -right-24"></div>
+  <div class="blob w-72 h-72 bg-macaron-lilac   bottom-0  right-1/3"></div>
+
+<div class="relative z-10">
+
+<!-- ================= 视图 A：新首页（橱窗版 v3） ================= -->
+<div id="viewHome" class="view-home">
+
+<header class="max-w-7xl mx-auto px-5 md:px-8 pt-6 pb-3 md:pb-5">
+    <!-- Navbar -->
+    <nav class="flex flex-wrap items-center justify-between gap-4">
+      <!-- Language switcher (moved here per user request, replaces logo) -->
+      <div id="langSwitcher"
+           class="inline-flex items-center gap-1 bg-white/70 backdrop-blur rounded-full border border-white px-1.5 py-1 shadow-sm shrink-0"
+           role="group" aria-label="Language selector">
+        <button type="button" data-lang="zh" class="lang-btn rounded-full px-2.5 py-1 text-sm">CN</button>
+        <button type="button" data-lang="es" class="lang-btn rounded-full px-2.5 py-1 text-sm">MX</button>
+      </div>
+
+      <!-- V3 搜索框：光晕玻璃壳 + 内嵌搜索按钮（提交后跳转目录页执行搜索） -->
+      <div class="flex-1 max-w-lg mx-auto w-full">
+        <form id="searchFormHome" role="search"
+              class="search-shell relative flex items-center w-full rounded-full bg-white/95 border-2 border-white backdrop-blur transition focus-within:border-macaron-sky focus-within:ring-4 focus-within:ring-macaron-sky/40">
+          <svg class="absolute left-4 w-5 h-5 text-[#5AB4F0] pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <circle cx="11" cy="11" r="7"></circle>
+            <path d="M21 21l-4.3-4.3" stroke-linecap="round"></path>
+          </svg>
+          <input
+            id="searchInputHome"
+            type="search"
+            inputmode="search"
+            enterkeyhint="search"
+            placeholder="在此处输入你想要查找的商品"
+            class="w-full bg-transparent pl-11 pr-2 py-3 text-[16px] text-[#1F5C8A] placeholder-[#9EB5C8] font-medium focus:outline-none rounded-full min-w-0 font-body" />
+          <button type="submit" aria-label="Buscar"
+            class="shrink-0 m-1 inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-macaron-sky to-macaron-bluedeep text-white text-sm font-cute font-bold px-4 py-2 hover:opacity-90 active:scale-95 transition">
+            <svg class="w-4 h-4 md:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3" stroke-linecap="round"></path></svg>
+            <span id="searchBtnHomeText" class="hidden md:inline">Buscar</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Backend login entry (currency is set globally in admin, no frontend switcher) -->
+      <div class="flex items-center gap-2 md:gap-3 w-full md:w-auto justify-between md:justify-end order-last md:order-none">
+        <a href="./admin/index.html"
+           class="hidden md:inline-flex items-center gap-2 bg-gradient-to-r from-macaron-sky to-macaron-bluedeep text-white rounded-full px-4 py-2 border border-white text-sm font-semibold hover:opacity-90 transition"
+           title="Panel de administración">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="admin-login-label" data-i18n="ui.adminLogin">Acceso administrativo</span>
+        </a>
+      </div>
+    </nav>
+
+    <!-- 主题 Banner：水彩渐变卡片 + 圆润手写标题（细白色描边）+ 网站介绍（墨西哥口语化） -->
+    <div class="mt-7 md:mt-9">
+      <div class="relative overflow-hidden rounded-[2rem] md:rounded-[2.4rem]
+                  border-2 border-white/80 shadow-soft
+                  bg-gradient-to-br from-macaron-sky/85 via-macaron-mint/80 to-macaron-goose/80">
+        <!-- 内部装饰：小白兔 / 小爱心 / 小星星 -->
+        <span class="absolute top-3 left-5 text-2xl md:text-3xl opacity-80 select-none" aria-hidden="true">🐰</span>
+        <span class="absolute top-5 right-8 text-xl md:text-2xl opacity-80 select-none" aria-hidden="true">♡</span>
+        <span class="absolute bottom-3 right-6 text-xl md:text-2xl opacity-80 select-none" aria-hidden="true">✦</span>
+        <span class="absolute bottom-4 left-7 text-base md:text-lg opacity-80 select-none" aria-hidden="true">✧</span>
+
+        <div class="px-6 md:px-12 py-7 md:py-10 text-center">
+          <h2 id="heroTitle"
+              class="font-cute font-bold text-3xl md:text-5xl leading-tight
+                     text-[#1F5C8A]"
+                     style="text-shadow:
+                       -1.2px -1.2px 0 #fff, 1.2px -1.2px 0 #fff,
+                       -1.2px 1.2px 0 #fff, 1.2px 1.2px 0 #fff,
+                       0 0 12px rgba(255,255,255,.6);">
+            Bienvenido a Haven Shop ✨
+          </h2>
+          <p id="heroSubtitle"
+             class="mt-3 md:mt-4 max-w-2xl mx-auto text-sm md:text-lg leading-relaxed
+                    text-[#2E6B96] font-medium">
+            Contamos con merch de K-pop, artículos de anime japonés, peluches divertidos, llaveros y mucho más.
+          </p>
+          <div class="mt-4 flex justify-center gap-2 flex-wrap text-[11px] md:text-xs">
+            <span class="px-3 py-1 rounded-full bg-white/70 text-[#1F5C8A] font-semibold">✦ Peluches</span>
+            <span class="px-3 py-1 rounded-full bg-white/70 text-[#1F5C8A] font-semibold">✦ Llaveros</span>
+            <span class="px-3 py-1 rounded-full bg-white/70 text-[#1F5C8A] font-semibold">✦ Anime</span>
+            <span class="px-3 py-1 rounded-full bg-white/70 text-[#1F5C8A] font-semibold">✦ K-pop</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ ① 即将发行（预售专区，内容来自后台商品预售字段） ============ -->
+<section id="presaleSection" class="max-w-7xl mx-auto px-5 md:px-8 mt-8">
+  <div class="rounded-[1.8rem] border-2 border-white/85 bg-white/70 backdrop-blur shadow-soft p-5 md:p-6">
+    <div class="flex items-center justify-between gap-3 mb-4 flex-wrap">
+      <h2 id="presaleTitle" data-i18n="ui.presaleTitle" class="font-cute font-bold text-xl md:text-2xl text-[#1F5C8A]" style="text-shadow:-1px -1px 0 #fff,1px -1px 0 #fff,-1px 1px 0 #fff,1px 1px 0 #fff;">
+        ✦ Próximos lanzamientos
+      </h2>
+      <span id="presaleBadge" data-i18n="ui.presaleBadge" class="text-[11px] md:text-xs px-3 py-1 rounded-full bg-macaron-pink/70 text-[#A03370] font-semibold">Preventa activa</span>
+    </div>
+    <div id="presaleGrid" class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3"></div>
+  </div>
+</section>
+
+<!-- ============ ② 本周销量榜 TOP3（auto 按 sales_logs 周聚合 / manual 后台指定） ============ -->
+<section id="topSalesSection" class="max-w-7xl mx-auto px-5 md:px-8 mt-6">
+  <div class="rounded-[1.8rem] border-2 border-white/85 bg-white/75 backdrop-blur shadow-soft p-5 md:p-6">
+    <div class="flex items-center justify-between gap-3 mb-4 flex-wrap">
+      <h2 data-i18n="ui.topTitle" class="font-cute font-bold text-xl md:text-2xl text-[#1F5C8A]" style="text-shadow:-1px -1px 0 #fff,1px -1px 0 #fff,-1px 1px 0 #fff,1px 1px 0 #fff;">
+        🏆 Top ventas de la semana
+      </h2>
+      <span data-i18n="ui.topUpdated" class="text-[11px] md:text-xs px-3 py-1 rounded-full bg-macaron-sky/70 text-[#1F5C8A] font-semibold">Actualizado hoy</span>
+    </div>
+    <ol id="topSalesList" class="grid gap-2 md:gap-3"></ol>
+  </div>
+</section>
+
+<!-- ============ ③ 精选橱窗：固定两行（2×4）商品卡 + 通栏「查看更多」分割线 ============ -->
+<section class="max-w-7xl mx-auto px-5 md:px-8 mt-8 pb-4">
+  <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
+    <h2 class="font-cute font-bold text-xl md:text-2xl text-[#1F5C8A]" style="text-shadow:-1px -1px 0 #fff,1px -1px 0 #fff,-1px 1px 0 #fff,1px 1px 0 #fff;">
+      🛍️ <span data-i18n="ui.featuredTitle">Nuestros productos</span>
+    </h2>
+    <span class="text-xs text-[#5A6F80]"><span id="featCount" class="font-cute font-bold text-[#A03370]">8</span> <span data-i18n="ui.featuredUnit">artículos destacados</span></span>
+  </div>
+  <div id="gridFeatured" class="grid gap-5 md:gap-6 grid-cols-2 sm:grid-cols-4"></div>
+  <!-- 查看更多商品：真实跳转到独立目录页 /catalogo -->
+  <a href="/catalogo"
+     class="group mt-8 mb-2 flex items-center justify-center gap-2.5 w-full rounded-2xl border-2 border-white bg-macaron-sky/25 hover:bg-macaron-sky/50 active:bg-macaron-sky/60 transition min-h-[54px] px-4">
+    <span class="font-cute font-bold text-base md:text-lg text-[#1F5C8A] tracking-wide" data-i18n="ui.viewMore">Ver más productos</span>
+    <span class="text-lg text-[#1F5C8A] transition-transform duration-200 group-hover:translate-x-1.5">→</span>
+  </a>
+</section>
+
+<!-- ============ ④ 社区好评（内容来自后台 reviews_json） ============ -->
+<section id="reviewsSection" class="max-w-7xl mx-auto px-5 md:px-8 mt-6">
+  <div class="rounded-[1.8rem] border-2 border-white/85 bg-white/75 backdrop-blur shadow-soft p-5 md:p-6">
+    <h2 data-i18n="ui.reviewsTitle" class="font-cute font-bold text-xl md:text-2xl text-[#1F5C8A] mb-4" style="text-shadow:-1px -1px 0 #fff,1px -1px 0 #fff,-1px 1px 0 #fff,1px 1px 0 #fff;">
+      📸 Comunidad · Lo que recibieron
+    </h2>
+    <div id="reviewsViewport" class="reviews-viewport">
+      <div id="reviewsGrid" class="reviews-track gap-3 pr-3"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ⑤ 加入社区（链接来自后台 community_links_json；优惠券区已移除） ============ -->
+<section id="communitySection" class="max-w-7xl mx-auto px-5 md:px-8 mt-6 mb-10">
+  <div class="rounded-[1.6rem] border-2 border-white/85 bg-gradient-to-br from-macaron-lilac/70 to-macaron-sky/60 shadow-soft p-5 md:p-6">
+    <h2 data-i18n="ui.communityTitle" class="font-cute font-bold text-lg md:text-xl text-[#6A3FB5] mb-2" style="text-shadow:-1px -1px 0 #fff,1px -1px 0 #fff,-1px 1px 0 #fff,1px 1px 0 #fff;">
+      💜 Únete a la comunidad
+    </h2>
+    <p data-i18n="ui.communitySub" class="text-xs md:text-sm text-[#3F4E60] mb-3">Entérate de preventas, reventas y sorteos exclusivos para fans.</p>
+    <div id="communityLinks" class="flex gap-2 flex-wrap"></div>
+  </div>
+</section>
+
+</div><!-- /viewHome -->
+
+<!-- =============== 客服与售后（全局：两个视图共用，内容后台可配） =============== -->
+<section id="serviceSection" class="max-w-7xl mx-auto px-5 md:px-8 mt-6" hidden>
+  <div class="rounded-[1.8rem] border-2 border-white/85 bg-white/75 backdrop-blur shadow-soft p-5 md:p-6">
+    <h3 class="font-cute font-bold text-lg md:text-xl text-[#1F5C8A] mb-3" style="text-shadow:-1px -1px 0 #fff,1px -1px 0 #fff,-1px 1px 0 #fff,1px 1px 0 #fff;">
+      <span data-i18n="ui.serviceTitle">🌷 Atención y posventa</span>
+    </h3>
+    <div class="grid gap-3 md:grid-cols-3 text-xs md:text-sm text-[#3F4E60]">
+      <div class="rounded-2xl bg-gradient-to-br from-macaron-sky/40 to-white/70 p-3 border border-white">
+        <div class="font-bold text-[#1F5C8A] mb-1">🛡️ <span data-i18n="ui.serviceQuality">Calidad garantizada</span></div>
+        <span data-i18n-key="cs_guarantee">Revisamos cada producto antes de entregarlo. Si hay algún detalle, lo cambiamos sin problema.</span>
+      </div>
+      <div class="rounded-2xl bg-gradient-to-br from-macaron-mint/40 to-white/70 p-3 border border-white">
+        <div class="font-bold text-[#1E5BA8] mb-1">📦 <span data-i18n="ui.serviceShipping">Envíos</span></div>
+        <span data-i18n-key="cs_shipping">Envíos a todo México. Compra segura en tienda o por WhatsApp.</span>
+      </div>
+      <div class="rounded-2xl bg-gradient-to-br from-macaron-pink/40 to-white/70 p-3 border border-white">
+        <div class="font-bold text-[#A03370] mb-1">💬 <span data-i18n="ui.serviceContact">Contacto</span></div>
+        <a id="serviceWaLink" href="#" target="_blank" rel="noopener"
+           class="inline-flex items-center gap-1 font-semibold text-[#1F7A4D] hover:underline break-all">
+          📱 <span id="serviceWaNum"></span>
+        </a>
+        <div id="serviceHours" class="mt-0.5"></div>
+        <a id="serviceMapsLink" href="#" target="_blank" rel="noopener"
+           class="block mt-1 font-semibold text-[#2E6B96] hover:underline">
+          📍 <span id="serviceAddr"></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============== PRODUCT DETAIL MODAL（全局层，两个视图共用） =============== -->
+<div id="productModal" class="modal-backdrop" role="dialog" aria-modal="true">
+  <div class="modal-card p-5 md:p-7" onclick="event.stopPropagation()">
+    <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+      <!-- Image -->
+      <div class="rounded-3xl overflow-hidden bg-gradient-to-br from-macaron-sky via-macaron-mint to-macaron-goose p-1.5">
+        <img id="mImg" src="" alt="" class="w-full aspect-square object-contain rounded-[1.3rem] bg-white">
+      </div>
+
+      <!-- Info -->
+      <div class="flex flex-col">
+        <!-- Category -->
+        <div id="mCategory" class="inline-flex items-center gap-2 self-start rounded-full px-3 py-1 text-sm font-semibold text-[#1F5C8A] bg-macaron-sky/40">
+          <span id="mCatIcon"></span>
+          <span id="mCatName"></span>
+        </div>
+
+        <!-- Title -->
+        <h3 id="mName" class="font-cute font-bold text-2xl md:text-3xl text-[#1F5C8A] mt-4 leading-tight"></h3>
+
+        <!-- SKU -->
+        <div class="mt-4">
+          <span id="mSkuLabel" class="text-xs uppercase tracking-wider text-[#5A6F80] font-semibold">SKU interno #</span>
+          <div id="mSku" class="sku-tag mt-1 inline-block bg-gradient-to-r from-macaron-goose to-macaron-peach text-[#7A4A00] px-4 py-2 rounded-xl text-lg font-bold shadow-sm border border-orange-100"></div>
+        </div>
+
+        <!-- Price & Stock row -->
+        <div class="mt-5 grid grid-cols-2 gap-4">
+          <div class="rounded-2xl bg-gradient-to-br from-macaron-pink to-macaron-peach p-4">
+            <div id="mPriceLabel" class="text-xs font-semibold text-[#A03370] uppercase tracking-wider">Precio</div>
+            <div id="mPrice" class="font-cute font-bold text-2xl md:text-3xl text-[#A03370] mt-1"></div>
+          </div>
+          <div class="rounded-2xl bg-gradient-to-br from-macaron-mint to-macaron-sky p-4">
+            <div id="mStockLabel" class="text-xs font-semibold text-[#1E5BA8] uppercase tracking-wider">Disponibles</div>
+            <div class="flex items-baseline gap-2 mt-1">
+              <span id="mStock" class="font-cute font-bold text-2xl md:text-3xl text-[#1E5BA8]"></span>
+              <span id="mStockBadge" class="text-xs font-semibold px-2 py-0.5 rounded-full"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="mt-5">
+          <div id="mDescLabel" class="text-xs uppercase tracking-wider text-[#5A6F80] font-semibold">Descripción</div>
+          <p id="mDesc" class="mt-2 text-[#2E6B96] leading-relaxed bg-macaron-sky/20 rounded-2xl p-4 border border-white"></p>
+        </div>
+
+        <!-- Quick info footer -->
+        <div class="mt-auto pt-5 relative">
+          <div class="flex flex-col gap-1.5">
+            <button id="copySku"
+              class="rounded-2xl bg-gradient-to-r from-macaron-sky to-macaron-bluedeep hover:opacity-90 text-white font-cute font-semibold px-5 py-2.5 flex items-center justify-center gap-2 transition min-h-[42px]">
+              <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span id="copySkuText">Copiar SKU</span>
+            </button>
+            <button id="closeModal"
+              class="rounded-2xl bg-macaron-sky/20 hover:bg-macaron-sky/40 text-[#1F5C8A] font-cute font-semibold px-5 py-2.5 transition min-h-[42px] flex items-center justify-center gap-2">
+              <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"></path>
+              </svg>
+              <span id="closeModalText">Cerrar</span>
+            </button>
+          </div>
+          <span id="copyHint" class="absolute -top-1 left-0 right-0 mx-auto text-xs text-[#5AB4F0] opacity-0 transition-opacity text-center pointer-events-none">¡Copiado!</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="mt-8 py-8 text-center text-[#5A6F80] text-sm border-t border-white/60 bg-white/45">
+  <p id="footerText" class="font-cute">☁ Haven Shop · Soporte técnico：<a href="https://itxw.cc/" target="_blank" rel="noopener" style="color:#7C5CFF;font-weight:700">itxwTeam</a> ☁</p>
+</footer>
+
+<!-- =============== JAVASCRIPT =============== -->
+<script>
+/* =========================================================================
+   HAVEN SHOP - INTERNATIONALIZATION (i18n)
+   2 languages: es (default / Español), zh (简体中文) — EN removed per user request
+   ========================================================================= */
+const I18N = {
+  zh: {
+    ui: {
+      siteTitle:          'Haven Shop ✨ 动漫谷子画册',
+      categoriesLabel:    '商品分类 ✨',
+      showingPrefix:      '共',
+      showingItems:       '件商品',
+      adminLogin:         '后台登录',
+      currentFilter:      '当前分类：',
+      keyboardTip:        '提示：按',
+      keyboardTip2:       '可快速搜索',
+      searchPlaceholder:  '搜索名称、SKU编码…',
+      searchHomePlaceholder: '在此处输入你想要查找的商品',
+      searchBtn:          '搜索',
+      emptyTitle:         '未找到匹配的商品…',
+      emptySub:           '请尝试其他关键词、SKU或分类。',
+      footer:             '☁ Haven Shop · 技术支持：<a href="https://itxw.cc/" target="_blank" rel="noopener" style="color:#7C5CFF;font-weight:700">itxwTeam</a> ☁',
+      heroTitlePrefix:    '欢迎光临 ',
+      heroTitleSuffix:    ' ✨',
+      heroSubtitle:       'Contamos con merch de K-pop, artículos de anime japonés, peluches divertidos, llaveros y mucho más.',
+      skuLabel:           '内部 SKU 编号',
+      priceLabel:         '价格',
+      stockLabel:         '库存',
+      descLabel:          '商品描述',
+      copySkuBtn:         '复制 SKU',
+      copiedHint:         '已复制！',
+      closeModalBtn:      '关闭',
+      stockIn:            '现货充足',
+      stockLow:           '库存紧张',
+      stockOut:           '暂无库存',
+      viewBtn:            '查看',
+      stockPrefix:        '库存：',
+      scrollHint:         '左右滑动查看更多分类',
+      breadcrumbHome:     '首页',
+      // ---- V3 双视图 / 首页新模块 ----
+      backHome:           '← 返回首页',
+      catalogTitle:       '全部商品目录 ✨',
+      catalogSub:         '支持按分类筛选，也可搜索名称或 SKU 编码',
+      presaleTitle:       '✦ 即将发售 · 预售专区',
+      presaleBadge:       '预售开放中',
+      topTitle:           '🏆 本周销量 TOP3',
+      topUpdated:         '实时更新',
+      featuredTitle:      '精选商品',
+      featuredUnit:       '件精选好物',
+      viewMore:           '点击查看更多商品',
+      reviewsTitle:       '📸 买家好评',
+      communityTitle:     '💜 加入社区',
+      communitySub:       '获取预售、补货与抽奖的第一手消息。',
+      serviceTitle:       '🌷 客服与售后',
+      serviceQuality:     '品质保证',
+      serviceShipping:    '配送说明',
+      serviceContact:     '联系方式',
+      presaleNoteDefault: '到货后即发货 · 可先付定金预留',
+    },
+    categories: {
+      all:   '全部商品',
+      plush: '毛绒玩偶',
+      cards: '收藏卡牌',
+      bags:  '包包收纳',
+      kpop:  'Kpop周边',
+      manga: '日本漫画',
+    },
+  },
+  es: {
+    ui: {
+      siteTitle:          'Haven Shop ✨ Catálogo Anime',
+      categoriesLabel:    'Categorías ✨',
+      showingPrefix:      'Mostrando',
+      showingItems:       'artículos',
+      adminLogin:         'Acceso administrativo',
+      currentFilter:      'Filtro actual:',
+      keyboardTip:        'Tip: presiona',
+      keyboardTip2:       'para buscar',
+      searchPlaceholder:  'Busca nombre o SKU…',
+      searchHomePlaceholder: 'Escribe aquí lo que buscas',
+      searchBtn:          'Buscar',
+      emptyTitle:         'No encontramos artículos…',
+      emptySub:           'Prueba con otra palabra, SKU o categoría.',
+      footer:             '☁ Haven Shop · Soporte técnico：<a href="https://itxw.cc/" target="_blank" rel="noopener" style="color:#7C5CFF;font-weight:700">itxwTeam</a> ☁',
+      heroTitlePrefix:    'Bienvenido a ',
+      heroTitleSuffix:    ' ✨',
+      heroSubtitle:       'Contamos con merch de K-pop, artículos de anime japonés, peluches divertidos, llaveros y mucho más.',
+      skuLabel:           'SKU interno #',
+      priceLabel:         'Precio',
+      stockLabel:         'Disponibles',
+      descLabel:          'Descripción',
+      copySkuBtn:         'Copiar SKU',
+      copiedHint:         '¡Copiado!',
+      closeModalBtn:       'Cerrar',
+      stockIn:            'En stock',
+      stockLow:           'Pocas piezas',
+      stockOut:           'Agotado',
+      viewBtn:            'Ver',
+      stockPrefix:        'Stock:',
+      scrollHint:         'Desliza para ver más categorías',
+      breadcrumbHome:     'Inicio',
+      // ---- V3 双视图 / 首页新模块 ----
+      backHome:           '← Volver al inicio',
+      catalogTitle:       'Catálogo completo ✨',
+      catalogSub:         'Filtra por categoría o busca por nombre y SKU',
+      presaleTitle:       '✦ Próximos lanzamientos',
+      presaleBadge:       'Preventa activa',
+      topTitle:           '🏆 Top ventas de la semana',
+      topUpdated:         'Actualizado hoy',
+      featuredTitle:      'Nuestros productos',
+      featuredUnit:       'artículos destacados',
+      viewMore:           'Ver más productos',
+      reviewsTitle:       '📸 Comunidad · Lo que recibieron',
+      communityTitle:     '💜 Únete a la comunidad',
+      communitySub:       'Entérate de preventas, reventas y sorteos exclusivos para fans.',
+      serviceTitle:       '🌷 Atención y posventa',
+      serviceQuality:     'Calidad garantizada',
+      serviceShipping:    'Envíos',
+      serviceContact:     'Contacto',
+      presaleNoteDefault: 'Se envía al llegar · Reserva con anticipo',
+    },
+    categories: {
+      all:   'Todos los productos',
+      plush: 'Peluches',
+      cards: 'Tarjetas coleccionables',
+      bags:  'Bolsas y mochilas',
+      kpop:  'Merch K-pop',
+      manga: 'Anime japones',
+    },
+  },
+};
+
+/* ---------- i18n helpers ---------- */
+let currentLang = 'es';   // DEFAULT = Español (per user request)
+const LANG_KEY = 'haven-lang';
+
+function t(key) {
+  // nested key like 'ui.categoriesLabel' or 'categories.all'
+  const parts = key.split('.');
+  const node  = (I18N[currentLang] || I18N.es);   // fallback to Español always
+  let cur = node;
+  for (const p of parts) { cur = cur && cur[p]; }
+  if (cur != null) return cur;
+  // Secondary fallback: also try Español if primary was zh and missed
+  let fb = I18N.es;
+  for (const p of parts) { fb = fb && fb[p]; }
+  return fb == null ? key : fb;
+}
+function catName(key)  { return t('categories.' + key); }
+function prodName(p) {
+  // Spanish default / Chinese secondary. English master name only as absolute last resort.
+  if (currentLang === 'zh') return p.name_zh || p.name_es || p.name;
+  return p.name_es || p.name_zh || p.name;
+}
+function prodDesc(p) {
+  if (currentLang === 'zh') return p.desc_zh || p.desc_es || p.description;
+  return p.desc_es || p.desc_zh || p.description;
+}
+
+/* =========================================================================
+   HAVEN SHOP - PRODUCT DATA
+   -------------------------------------------------------------------------
+   Edit this array to update your real product catalog.
+   Fields:
+     id         : unique number
+     sku        : internal lookup code (STAFF SCAN / SEARCH KEY) - MAKE IT UNIQUE
+     name       : English product title       (name_zh = 中文, name_es = Español)
+     category   : one of: plush | cards | bags | kpop | manga
+     price      : USD number
+     stock      : integer
+     image      : direct image URL (we use picsum.photos placeholder, replace with real links)
+     description: English description         (desc_zh = 中文, desc_es = Español)
+   ========================================================================= */
+/* ---------- 分类样式表（按 code 映射 UI 样式；后台新增分类若未在此表，则使用默认渐变） ---------- */
+const CATEGORY_STYLES = {
+  plush: { icon: '🧸', bg:'bg-gradient-to-r from-macaron-pink to-macaron-peach',       txt:'text-pink-700' },
+  cards: { icon: '🃏', bg:'bg-gradient-to-r from-macaron-goose to-macaron-mint',        txt:'text-yellow-700' },
+  bags:  { icon: '👜', bg:'bg-gradient-to-r from-macaron-mint to-macaron-sky',         txt:'text-teal-700' },
+  kpop:  { icon: '💿', bg:'bg-gradient-to-r from-macaron-sky to-macaron-lilac',txt:'text-[#1F5C8A]' },
+  manga: { icon: '📚', bg:'bg-gradient-to-r from-macaron-lilac to-macaron-goose',      txt:'text-[#6A3FB5]' },
+};
+const CATEGORY_STYLE_DEFAULT = { icon: '', bg:'bg-gradient-to-r from-macaron-lilac to-macaron-pink', txt:'text-white' };
+function styleFor(code) { return CATEGORY_STYLES[code] || CATEGORY_STYLE_DEFAULT; }
+
+/* ---------- MOCK 分类（API 失败时使用，同时保留 ALL 这个特殊分类） ---------- */
+const CATEGORIES_MOCK = [
+  { key: 'plush', icon: '🧸', bg:'bg-gradient-to-r from-macaron-pink to-macaron-peach',       txt:'text-pink-700' },
+  { key: 'cards', icon: '🃏', bg:'bg-gradient-to-r from-macaron-goose to-macaron-mint',        txt:'text-yellow-700' },
+  { key: 'bags',  icon: '👜', bg:'bg-gradient-to-r from-macaron-mint to-macaron-sky',         txt:'text-teal-700' },
+  { key: 'kpop',  icon: '💿', bg:'bg-gradient-to-r from-macaron-sky to-macaron-lilac',txt:'text-[#1F5C8A]' },
+  { key: 'manga', icon: '📚', bg:'bg-gradient-to-r from-macaron-lilac to-macaron-goose',      txt:'text-[#6A3FB5]' },
+];
+/* 实际运行时的分类和商品数组（init 时赋值：API 优先，fallback MOCK） */
+let CATEGORIES = [];
+let PRODUCTS   = [];
+
+//  --- Sample Product Data (MOCK, used when /api/products is unreachable) ---
+// Picsum seeded URLs give stable placeholder images; replace image URLs for real use.
+const PRODUCTS_MOCK = [
+  // ===================== PLUSH =====================
+  { id:1,  sku:'HS-PL-001', name:'Cinnamoroll Fluffy Keychain',
+    name_zh:'玉桂狗毛绒挂件钥匙扣', name_es:'Llavero de felpa Cinnamoroll',
+    category:'plush', price:14.99, stock:42,
+    image:'https://picsum.photos/seed/cinna1/600/600',
+    description:'Soft white Cinnamoroll plush keychain with blue ribbon, ~10cm tall, perfect for bags.',
+    desc_zh:'柔软白色玉桂狗毛绒挂件钥匙扣，蓝色丝带，高约10cm，挂包包超可爱。',
+    desc_es:'Llavero de felpa suave de Cinnamoroll blanco con lazo azul, ~10cm de alto, ideal para bolsos.' },
+  { id:2,  sku:'HS-PL-002', name:'My Melody Standing Plush 20cm',
+    name_zh:'美乐蒂站立毛绒 20cm', name_es:'Peluche de pie My Melody 20cm',
+    category:'plush', price:24.50, stock:18,
+    image:'https://picsum.photos/seed/melo2/600/600',
+    description:'Medium-size pink My Melody plush with hood, embroidered face, fluffy stuffing.',
+    desc_zh:'中号粉色美乐蒂毛绒，可站立造型，带帽兜，刺绣表情，填充蓬松。',
+    desc_es:'Peluche rosa de tamaño mediano My Melody con capucha, cara bordada y relleno mullido.' },
+  { id:3,  sku:'HS-PL-003', name:'Kuromi Dark Star Pillow Plush',
+    name_zh:'库洛米暗黑星星抱枕毛绒', name_es:'Cojín de peluche Kuromi Estrella Oscura',
+    category:'plush', price:32.00, stock:7,
+    image:'https://picsum.photos/seed/kuro3/600/600',
+    description:'Chubby Kuromi cushion plush with star embroidery on hood, 30cm long body pillow style.',
+    desc_zh:'圆滚滚库洛米抱枕，帽兜上刺绣星星，长约30cm，可抱可靠。',
+    desc_es:'Cojín de peluche Kuromi rechoncho con bordado de estrella en la capucha, 30cm de largo tipo body pillow.' },
+  { id:4,  sku:'HS-PL-004', name:'Pompompurin Pancake Stack Plushie',
+    name_zh:'布丁狗松饼塔毛绒', name_es:'Peluche Pompompurin torre de tortitas',
+    category:'plush', price:19.99, stock:25,
+    image:'https://picsum.photos/seed/purin4/600/600',
+    description:'Cute Pompompurin sitting on a stack of 3 pancakes with tiny syrup drizzle detail.',
+    desc_zh:'可爱布丁狗坐在三层松饼塔上，还有迷你糖浆淋面细节。',
+    desc_es:'Tierno Pompompurin sentado sobre 3 tortitas apiladas con detalle de sirope.' },
+  { id:5,  sku:'HS-PL-005', name:'BT21 RJ Baby Mini Pouch',
+    name_zh:'BT21 RJ 羊驼迷你零钱包', name_es:'Mini monedero bebé BT21 RJ',
+    category:'plush', price:22.00, stock:0,
+    image:'https://picsum.photos/seed/rj5/600/600',
+    description:'Soft alpaca RJ mini zipper pouch made of fluffy fleece, fits lip balm & AirPods.',
+    desc_zh:'柔软的羊驼RJ迷你拉链零钱包，蓬松绒毛材质，可放唇膏和AirPods。',
+    desc_es:'Mini monedero con cremallera de la alpaca RJ, tejido de felpa mullida, para bálsamo labial y AirPods.' },
+  { id:6,  sku:'HS-PL-006', name:'Sanrio Pochacco Dangle Charm',
+    name_zh:'三丽鸥帕恰狗小挂饰', name_es:'Llavero de felpa Pochacco Sanrio',
+    category:'plush', price:11.00, stock:58,
+    image:'https://picsum.photos/seed/pocha6/600/600',
+    description:'Tiny 7cm Pochacco dangle plush with metal clasp, excellent gift topper.',
+    desc_zh:'7cm迷你帕恰狗挂件，带金属扣，送礼点缀超合适。',
+    desc_es:'Llavero chiquito de 7cm de Pochacco con cierre metálico, perfecto para regalo.' },
+  { id:7,  sku:'HS-PL-007', name:'Sumikko Gurashi Penguin Plush',
+    name_zh:'角落生物企鹅?毛绒', name_es:'Peluche Pingüino ¿? Sumikko Gurashi',
+    category:'plush', price:17.50, stock:3,
+    image:'https://picsum.photos/seed/sumikko7/600/600',
+    description:'Pastel blue penguin? from Sumikko with little polka dot feet, ~15cm.',
+    desc_zh:'角落生物淡蓝色「企鹅？」毛绒，波点小脚，约15cm。',
+    desc_es:'¿Pingüino? azul pastel de Sumikko con patitas de lunares, ~15cm.' },
+  { id:8,  sku:'HS-PL-008', name:'Bunny Strawberry Bag Charm',
+    name_zh:'垂耳兔草莓包包挂饰', name_es:'Llavero de conejo con fresa para bolsa',
+    category:'plush', price:13.00, stock:30,
+    image:'https://picsum.photos/seed/bunny8/600/600',
+    description:'White floppy-eared bunny holding a mini strawberry, soft pastel plush charm.',
+    desc_zh:'白色垂耳兔抱迷你草莓，柔和马卡龙色毛绒挂饰。',
+    desc_es:'Conejo blanco de orejas caídas con una mini fresa, llavero de felpa pastel suave.' },
+
+  // ===================== CARDS =====================
+  { id:9,  sku:'HS-CA-001', name:'BTS Photocard Pack (Ver. Dusk)',
+    name_zh:'BTS 小卡套装（暮色版）', name_es:'Pack de photocards BTS (Ver. Dusk)',
+    category:'cards', price:9.99,  stock:80,
+    image:'https://picsum.photos/seed/btscard1/600/600',
+    description:'Set of 7 premium glossy photocards, group + individual shots from Dusk concept. Random polaroid included.',
+    desc_zh:'7张高级亮面小卡，暮色概念团体+个人照，随机附赠拍立得一张。',
+    desc_es:'Set de 7 photocards premium brillantes, fotos grupales e individuales del concepto Dusk. Incluye polaroid aleatoria.' },
+  { id:10, sku:'HS-CA-002', name:'Pokémon Scarlet Violet Tins',
+    name_zh:'宝可梦朱紫主题铁盒', name_es:'Lata de cartas Pokémon Escarlata y Púrpura',
+    category:'cards', price:29.99, stock:12,
+    image:'https://picsum.photos/seed/poketin2/600/600',
+    description:'Koraidon / Miraidon sealed art tin, 4 booster packs + 1 holo promo per tin.',
+    desc_zh:'故勒顿/密勒顿封绘铁盒，每盒含4包补充包+1张全息特典卡。',
+    desc_es:'Lata sellada con arte de Koraidon / Miraidon, 4 sobres booster + 1 carta promo holográfica por lata.' },
+  { id:11, sku:'HS-CA-003', name:'NewJeans Bunny Photocards Set',
+    name_zh:'NewJeans 兔子小卡套装', name_es:'Set de photocards de conejitos NewJeans',
+    category:'cards', price:12.00, stock:50,
+    image:'https://picsum.photos/seed/njcards3/600/600',
+    description:'5-piece bunny-themed glossy photocards + 2 sticker cards of each member.',
+    desc_zh:'5张兔子主题亮面小卡 + 每位成员2张贴纸卡。',
+    desc_es:'5 photocards brillantes con temática de conejitos + 2 tarjetas-pegatina de cada miembro.' },
+  { id:12, sku:'HS-CA-004', name:'Yu-Gi-Oh! Ghost Rare Mystery Pack',
+    name_zh:'游戏王全息鬼魂稀有卡福袋', name_es:'Sobre misterio Yu-Gi-Oh! Ghost Rare',
+    category:'cards', price:34.50, stock:9,
+    image:'https://picsum.photos/seed/ygo4/600/600',
+    description:'Guaranteed 1 Ghost Rare card + 4 holographic rares, 20 common cards, mystery vintage repack.',
+    desc_zh:'保底1张Ghost Rare鬼魂全息+4张闪卡+20普通卡，复古老包随机重封。',
+    desc_es:'Garantiza 1 carta Ghost Rare + 4 raras holográficas, 20 cartas comunes, repack vintage misterioso.' },
+  { id:13, sku:'HS-CA-005', name:'Stray Kids 5-Star Postcard Set',
+    name_zh:'Stray Kids 5-STAR 明信片套装', name_es:'Set de postales Stray Kids 5-Star',
+    category:'cards', price:10.50, stock:22,
+    image:'https://picsum.photos/seed/skz5/600/600',
+    description:'8 deluxe matte A6 postcards, 5-star concept, individually sleeved.',
+    desc_zh:'8张豪华哑膜A6明信片，5-STAR概念，每张独立卡套。',
+    desc_es:'8 postales A6 deluxe en mate, concepto 5-star, cada una en funda individual.' },
+  { id:14, sku:'HS-CA-006', name:'One Piece TCG Starter Deck',
+    name_zh:'海贼王卡牌游戏起始卡组', name_es:'Mazo inicial One Piece TCG',
+    category:'cards', price:26.00, stock:5,
+    image:'https://picsum.photos/seed/opcg6/600/600',
+    description:'Official ST-xx starter deck, 50 cards + playmat insert, Straw Hat Crew themed.',
+    desc_zh:'官方ST-xx起始卡组，50张卡+卡牌垫衬页，草帽海贼团主题。',
+    desc_es:'Mazo inicial oficial ST-xx, 50 cartas + inserto de playmat, temática de la banda del Sombrero de Paja.' },
+  { id:15, sku:'HS-CA-007', name:'LE SSERAFIM Holocard Collection',
+    name_zh:'LE SSERAFIM 全息小卡合集', name_es:'Colección de hologramas LE SSERAFIM',
+    category:'cards', price:11.00, stock:0,
+    image:'https://picsum.photos/seed/lesserafim7/600/600',
+    description:'6 reflective holographic photocards of all LS members, flame border version.',
+    desc_zh:'LESSERAFIM全员6张反射全息小卡，火焰边框版本。',
+    desc_es:'6 photocards holográficas reflectantes de todos los miembros de LS, versión borde de llama.' },
+
+  // ===================== BAGS =====================
+  { id:16, sku:'HS-BA-001', name:'Kawaii Cloud Tote Bag (Mint)',
+    name_zh:'马卡龙薄荷云朵托特包', name_es:'Bolso tote nube Kawaii (Menta)',
+    category:'bags', price:28.00, stock:15,
+    image:'https://picsum.photos/seed/cloudbag1/600/600',
+    description:'Super-soft mint canvas tote with puffy cloud embroidery, inner pocket, 40x35cm.',
+    desc_zh:'超柔软薄荷帆布托特包，蓬松云朵刺绣，内置口袋，40x35cm。',
+    desc_es:'Bolso tote de lona menta súper suave con bordado de nube inflada, bolsillo interior, 40x35cm.' },
+  { id:17, sku:'HS-BA-002', name:'Miffy Crossbody Mini Bag',
+    name_zh:'米菲迷你斜挎小包', name_es:'Mini bandolera Miffy',
+    category:'bags', price:36.00, stock:8,
+    image:'https://picsum.photos/seed/miffybag2/600/600',
+    description:'Cream white mini crossbody bag with Miffy face print, detachable strap, fits phone.',
+    desc_zh:'奶白色迷你斜挎包，米菲脸印花，可拆肩带，可装下手机。',
+    desc_es:'Mini bandolera blanca crema con estampado de la cara de Miffy, correa desmontable, entra el celular.' },
+  { id:18, sku:'HS-BA-003', name:'BT21 Tata Ita-Bag Large',
+    name_zh:'BT21 Tata 大号痛包', name_es:'Bolso ita-grande BT21 Tata',
+    category:'bags', price:54.00, stock:4,
+    image:'https://picsum.photos/seed/tataita3/600/600',
+    description:'Clear-front ita-bag, red/white color, inner separators and pin display slots. Bag only - pins sold separately.',
+    desc_zh:'透明前盖痛包，红白色系，内置隔板和吧唧展示槽，仅包体，吧唧另售。',
+    desc_es:'Bolso ita con frente transparente, color rojo/blanco, separadores y ranuras para pins. Solo el bolso, pins aparte.' },
+  { id:19, sku:'HS-BA-004', name:'Lavender Star Backpack',
+    name_zh:'薰衣草紫色星星双肩包', name_es:'Mochila lavanda con estrellas',
+    category:'bags', price:48.00, stock:20,
+    image:'https://picsum.photos/seed/starbk4/600/600',
+    description:'Pastel purple backpack with star motifs, padded laptop sleeve, water bottle pocket.',
+    desc_zh:'淡紫色双肩包，星星图案，加垫电脑隔层，水杯位。',
+    desc_es:'Mochila morada pastel con motivos de estrellas, funda acolchada para portátil y bolsa para botella.' },
+  { id:20, sku:'HS-BA-005', name:'Cinnamoroll Coin Pouch Wallet',
+    name_zh:'玉桂狗毛绒脸零钱包', name_es:'Monedero de cara de felpa Cinnamoroll',
+    category:'bags', price:15.50, stock:35,
+    image:'https://picsum.photos/seed/cinnapouch5/600/600',
+    description:'Round zipper coin pouch with Cinnamoroll plush face, soft faux leather body.',
+    desc_zh:'圆形拉链零钱包，玉桂狗毛绒脸蛋，软质仿皮主体。',
+    desc_es:'Monedero redondo con cremallera y cara de felpa de Cinnamoroll, cuerpo de piel sintética suave.' },
+  { id:21, sku:'HS-BA-006', name:'Dual-Color Binder Card Bag',
+    name_zh:'双色活页卡册收纳包', name_es:'Bolso-álbum de cartas bicolor',
+    category:'bags', price:22.00, stock:11,
+    image:'https://picsum.photos/seed/binderbag6/600/600',
+    description:'Pink/blue 2-pocket card binder + built-in carrying handles, holds 240 standard cards.',
+    desc_zh:'粉蓝双拼2格活页卡册，内置手提把手，可装240张标准卡。',
+    desc_es:'Álbum de 2 bolsillos rosa/azul + asas integradas, caben 240 cartas estándar.' },
+
+  // ===================== KPOP =====================
+  { id:22, sku:'HS-KP-001', name:'SEVENTEEN Heaven Album CD',
+    name_zh:'SEVENTEEN Heaven 迷你12辑 CD', name_es:'CD álbum SEVENTEEN Heaven',
+    category:'kpop', price:24.00, stock:26,
+    image:'https://picsum.photos/seed/svtalbum1/600/600',
+    description:'12th mini-album CD, photobook 96p, 1 random photocard, 1 sticker sheet, first press.',
+    desc_zh:'第12张迷你专辑CD，96页写真册，1张随机小卡，1张贴纸，首批限定。',
+    desc_es:'CD del 12º mini-álbum, photobook de 96p, 1 photocard aleatoria, 1 hoja de pegatinas, primera edición.' },
+  { id:23, sku:'HS-KP-002', name:'TWICE Strategy Lightstick Ver.3',
+    name_zh:'TWICE 棒棒糖应援灯 Ver.3', name_es:'Lightstick TWICE Strategy Ver.3',
+    category:'kpop', price:58.00, stock:6,
+    image:'https://picsum.photos/seed/twicelight2/600/600',
+    description:'Official TWICE candy-bong lightstick, bluetooth sync, dome-style, comes with strap & batteries.',
+    desc_zh:'官方TWICE糖果棒应援灯，蓝牙中控，圆顶造型，含挂绳+电池。',
+    desc_es:'Lightstick oficial candy-bong de TWICE, sincronización bluetooth, tipo domo, incluye correa y pilas.' },
+  { id:24, sku:'HS-KP-003', name:'ENHYPEN World Tour Hoodie (M)',
+    name_zh:'ENHYPEN 巡演卫衣 M码', name_es:'Sudadera gira mundial ENHYPEN (M)',
+    category:'kpop', price:62.00, stock:2,
+    image:'https://picsum.photos/seed/enhypenhood3/600/600',
+    description:'Official merch pastel gray hoodie with EN- logo embroidery, front kangaroo pocket, size M.',
+    desc_zh:'官方周边淡灰色连帽卫衣，EN-标志刺绣，前袋鼠口袋，M码。',
+    desc_es:'Sudadera gris pastel merch oficial con bordado del logo EN-, bolsillo canguro delantero, talla M.' },
+  { id:25, sku:'HS-KP-004', name:'BLACKPINK 7th Anniversary Badge Set',
+    name_zh:'BLACKPINK 7周年徽章套装', name_es:'Set de chapas 7º aniversario BLACKPINK',
+    category:'kpop',price:18.00, stock:40,
+    image:'https://picsum.photos/seed/bpbadge4/600/600',
+    description:'Set of 4 enamel pin badges featuring 7th anniversary art, individually backed & wrapped.',
+    desc_zh:'4枚7周年主题珐琅金属徽章，独立背板包装。',
+    desc_es:'Set de 4 chapas metálicas esmaltadas con arte del 7º aniversario, con respaldo y envoltorio individual.' },
+  { id:26, sku:'HS-KP-005', name:'TWS Last Bell Pop-Up MD Strap',
+    name_zh:'TWS Last Bell 快闪店挂绳套装', name_es:'Correa MD del pop-up TWS Last Bell',
+    category:'kpop', price:14.00, stock:19,
+    image:'https://picsum.photos/seed/twsstrap5/600/600',
+    description:'Official TWS lightstick strap, detachable, silicone wrist strap + woven shoulder strap combo.',
+    desc_zh:'官方TWS应援灯挂绳，可拆卸，硅胶腕带+织带肩带组合。',
+    desc_es:'Correa oficial para lightstick de TWS, desmontable, combo de correa de silicona muñeca + correa tejida de hombro.' },
+  { id:27, sku:'HS-KP-006', name:'IVE I Mine Platform Ver. Album',
+    name_zh:'IVE I Mine 平台版专辑', name_es:'Álbum IVE I Mine versión Plataforma',
+    category:'kpop', price:21.50, stock:14,
+    image:'https://picsum.photos/seed/ivealbum6/600/600',
+    description:'Platform version - digital QR card, mini folded poster, 2 member photocards, mini case.',
+    desc_zh:'平台版 — 数字QR卡，迷你折叠海报，2张成员小卡，迷你收纳盒。',
+    desc_es:'Versión Plataforma — tarjeta QR digital, mini póster doblado, 2 photocards de miembro, mini estuche.' },
+  { id:28, sku:'HS-KP-007', name:'RIIZE Talk Saxy Poster Set',
+    name_zh:'RIIZE Talk Saxy 海报套装', name_es:'Set de pósters RIIZE Talk Saxy',
+    category:'kpop', price:9.50,  stock:33,
+    image:'https://picsum.photos/seed/riizeposter7/600/600',
+    description:'Set of 6 individual member A3 glossy posters, Talk Saxy concept photos, folded & sealed.',
+    desc_zh:'6张成员个人A3亮面海报，Talk Saxy概念照，折叠密封包装。',
+    desc_es:'Set de 6 pósters brillantes A3 individuales por miembro, fotos del concepto Talk Saxy, doblados y sellados.' },
+  { id:29, sku:'HS-KP-008', name:'aespa Whiplash POB Photo Stand',
+    name_zh:'aespa Whiplash 预售礼亚克力立牌', name_es:'Stand acrílico POB aespa Whiplash',
+    category:'kpop', price:16.00, stock:0,
+    image:'https://picsum.photos/seed/aespastand8/600/600',
+    description:'Pre-order benefit acrylic stand, 4-members set, clear acrylic with Whiplash metallic print.',
+    desc_zh:'预售特典亚克力立牌，4人套装，透明亚克力+Whiplash金属感印刷。',
+    desc_es:'Stand acrílico de beneficio de pre-pedido, set de 4 miembros, acrílico transparente con impresión metálica Whiplash.' },
+
+  // ===================== MANGA =====================
+  { id:30, sku:'HS-MG-001', name:'Jujutsu Kaisen Vol. 25 (ENG)',
+    name_zh:'咒术回战 第25卷（英文）', name_es:'Jujutsu Kaisen Vol. 25 (ENG)',
+    category:'manga', price:11.00, stock:18,
+    image:'https://picsum.photos/seed/jjk25/600/600',
+    description:'Official English manga, Viz Media edition, Shibuya Incident finale arc, brand new.',
+    desc_zh:'官方英文Viz版漫画，涉谷事变篇结局卷，全新未拆。',
+    desc_es:'Manga oficial en inglés, edición Viz Media, arco final del Incidente de Shibuya, nuevo.' },
+  { id:31, sku:'HS-MG-002', name:'Chainsaw Man Box Set (1-11)',
+    name_zh:'电锯人 盒装套装 1-11卷', name_es:'Caja recopilatoria Chainsaw Man (1-11)',
+    category:'manga', price:140.00, stock:3,
+    image:'https://picsum.photos/seed/csmbox2/600/600',
+    description:'Complete box set volumes 1-11, hard slipcase, exclusive double-sided poster included.',
+    desc_zh:'1-11卷完整盒装，硬质收纳盒，附赠独家双面海报。',
+    desc_es:'Caja completa con tomos 1-11, estuche rígido, incluye póster doble cara exclusivo.' },
+  { id:32, sku:'HS-MG-003', name:'Frieren: Beyond Journey\'s End #8',
+    name_zh:'葬送的芙莉莲 第8卷', name_es:'Frieren: Más allá del final del viaje #8',
+    category:'manga', price:12.50, stock:25,
+    image:'https://picsum.photos/seed/frieren3/600/600',
+    description:'Fantasy slice-of-life manga, softcover Viz release, premium paper stock.',
+    desc_zh:'奇幻治愈日常漫画，Viz平装版，优质纸张。',
+    desc_es:'Manga de fantasía y vida cotidiana, edición Viz de tapa blanda, papel premium.' },
+  { id:33, sku:'HS-MG-004', name:'Spy x Family Vol. 13 (JP)',
+    name_zh:'间谍过家家 第13卷（日文原版）', name_es:'Spy x Family Vol. 13 (JP)',
+    category:'manga', price:9.00,  stock:10,
+    image:'https://picsum.photos/seed/sxf13/600/600',
+    description:'Japanese original Jump Comics edition, text is in Japanese, collectible.',
+    desc_zh:'日本原版Jump Comics版，日语正文，收藏推荐。',
+    desc_es:'Edición original japonesa Jump Comics, texto en japonés, coleccionable.' },
+  { id:34, sku:'HS-MG-005', name:'Oshi no Ko Deluxe Edition #5',
+    name_zh:'【我推的孩子】豪华版 第5卷', name_es:'Oshi no Ko Edición Deluxe #5',
+    category:'manga', price:18.00, stock:7,
+    image:'https://picsum.photos/seed/oshinoko5/600/600',
+    description:'Hardcover deluxe version with color pages, English translation, dust-jacket art.',
+    desc_zh:'精装豪华版含彩色页，英文翻译，书衣精美插画。',
+    desc_es:'Versión deluxe de tapa dura con páginas en color, traducción al inglés, arte en sobrecubierta.' },
+  { id:35, sku:'HS-MG-006', name:'Haikyu!! Final Arc Omnibus',
+    name_zh:'排球少年 最终战精选合集', name_es:'Haikyu!! Omnibus del arco final',
+    category:'manga', price:32.00, stock:4,
+    image:'https://picsum.photos/seed/hqfinal6/600/600',
+    description:'Final match arc special omnibus, 3-in-1 edition, full-color cover illustration.',
+    desc_zh:'最终比赛篇特别合集，3合1版，全彩封面插画。',
+    desc_es:'Omnibus especial del arco del partido final, edición 3 en 1, ilustración de portada a todo color.' },
+  { id:36, sku:'HS-MG-007', name:'Dandadan Vol. 14',
+    name_zh:'胆大党 第14卷', name_es:'Dandadan Vol. 14',
+    category:'manga', price:11.50, stock:0,
+    image:'https://picsum.photos/seed/danda14/600/600',
+    description:'Latest battle arc, English edition, Shonen Jump imprint, standard size TPB.',
+    desc_zh:'最新战斗篇，英文Viz版，少年Jump书系，标准平装漫画。',
+    desc_es:'Último arco de batalla, edición en inglés, sello Shonen Jump, TPB tamaño estándar.' },
+];
+
+/* =========================================================================
+   API LOADING + DATA ADAPTER
+   -------------------------------------------------------------------------
+   · 优先从 /api/categories + /api/products 拉取（部署在 Cloudflare Pages 时生效）
+   · 任何一个失败（本地 file:// 预览 / 网络错误 / 超时 3s）→ fallback 到本地 MOCK
+   · 把 API 返回的字段名转换成和 MOCK 一致的格式，保证 openModal /
+     renderFeatured 等现有函数零修改即可工作（分类/网格渲染已迁移到 catalogo.html）
+   ========================================================================= */
+/* 超时 + 异常安全的 fetch JSON
+ * ⚠️ Pages Functions 首次冷启动 + D1 首次查询可能需要 5-12 秒，超时不能太短。
+ *    冷启动失败会直接 fallback 到 MOCK，用户体验降级但不会白屏。 */
+const API_TIMEOUT_MS = 15000; // 原来是 3000（太短）
+
+/* 超时 + 异常安全的 fetch JSON */
+async function fetchJSON(url, fallbackValue) {
+  try {
+    const ctrl = new AbortController();
+    const to = setTimeout(() => ctrl.abort(), API_TIMEOUT_MS);
+    const resp = await fetch(url, { signal: ctrl.signal, method: 'GET', headers: { 'Accept': 'application/json' } });
+    clearTimeout(to);
+    if (!resp.ok) return fallbackValue;
+    const ct = resp.headers.get('content-type') || '';
+    if (!ct.includes('application/json')) return fallbackValue;
+    return await resp.json();
+  } catch (_) {
+    return fallbackValue;
+  }
+}
+
+/* 把 API 返回的分类数组（[{id,code,icon_emoji,name_es,name_zh,sort_order},...]）转成
+   和本地 MOCK 同构的 { key, icon, bg, txt }[]，并写 I18N 以便按后台数据显示分类名 */
+function adaptAPICategories(apiRows) {
+  if (!Array.isArray(apiRows) || apiRows.length === 0) return null;
+  apiRows.forEach(r => {
+    if (!r || !r.code) return;
+    // 把后台自定义的分类名写入 I18N 字典；如果后台某字段为空，保留原来的默认翻译
+    if (r.name_es) I18N.es.categories[r.code]  = r.name_es;
+    if (r.name_zh) I18N.zh.categories[r.code]  = r.name_zh;
+  });
+  return apiRows
+    .filter(r => r && r.code)
+    .sort((a, b) => (Number(a.sort_order) || 0) - (Number(b.sort_order) || 0))
+    .map(r => {
+      const s = styleFor(r.code);
+      return {
+        key: r.code,
+        id: r.id,
+        parent_id: r.parent_id || 0,
+        is_leaf: r.is_leaf !== undefined ? r.is_leaf : 1,
+        level: r.level || 1,
+        icon: r.icon_emoji || '',
+        bg:   s.bg,
+        txt:  s.txt,
+      };
+    });
+}
+
+/* 把 API 返回的商品数组（items）转成和 MOCK 同构的格式 */
+function adaptAPIProducts(apiData) {
+  if (!apiData || !apiData || !Array.isArray(apiData.items)) return null;
+  return apiData.items.map(r => ({
+    id:          Number(r.id),
+    sku:         r.sku || '',
+    category:    r.category_code || '',
+    name:        r.name_es || r.name_zh || '',
+    name_es:     r.name_es || r.name_zh || '',
+    name_zh:     r.name_zh || r.name_es || '',
+    price:       Number(r.price_mxn) || 0,
+    price_mxn:   Number(r.price_mxn) || 0,
+    price_eur:   Number(r.price_eur) || 0,  // 兼容历史数据
+    price_usd:   Number(r.price_usd) || 0,  // 兼容历史数据
+    stock:       Number(r.stock) || 0,
+    tags:        r.tags || '',
+    image:       r.image_url || 'https://picsum.photos/seed/' + (r.sku || r.id) + '/600/600',
+    description: r.desc_es || r.desc_zh || '',
+    desc_es:     r.desc_es || r.desc_zh || '',
+    desc_zh:     r.desc_zh || r.desc_es || '',
+    presale_arrive_date: r.presale_arrive_date || '',
+    presale_note_es:     r.presale_note_es || '',
+    presale_note_zh:     r.presale_note_zh || '',
+  }));
+}
+
+/* 构造「全部商品」这条特殊分类（永远放在第一位） */
+function allCategoryEntry() {
+  return { key: 'all', icon: '✨', bg:'bg-gradient-to-r from-macaron-sky to-macaron-pink', txt:'text-white' };
+}
+
+/* 主入口：并行拉分类+商品，超时/失败则 fallback 到 MOCK，赋值给全局 CATEGORIES / PRODUCTS */
+async function loadData() {
+  const [catJSON, prodJSON] = await Promise.all([
+    fetchJSON('/api/categories',          null),
+    fetchJSON('/api/products?limit=500',  null),
+  ]);
+
+  // --- CATEGORIES 决策 ---
+  let cats = adaptAPICategories(catJSON && Array.isArray(catJSON) ? catJSON : (catJSON && catJSON.data ? catJSON.data : null));
+  if (!cats) cats = CATEGORIES_MOCK.slice();
+  CATEGORIES = [allCategoryEntry(), ...cats];
+
+  // --- PRODUCTS 决策 ---
+  let prods = adaptAPIProducts(prodJSON && prodJSON.data ? prodJSON.data : prodJSON);
+  if (!prods || prods.length === 0) prods = PRODUCTS_MOCK.slice();
+  PRODUCTS = prods;
+}
+
+/* =========================================================================
+   APPLICATION STATE & RENDER FUNCTIONS
+   ========================================================================= */
+const state = {
+  activeId: null,
+};
+
+const $  = (id) => document.getElementById(id);
+const searchInputHome = $('searchInputHome');
+const modal      = $('productModal');
+
+/* ---------- Update ALL static UI text for current language ---------- */
+function updateStaticTexts() {
+  document.title = t('ui.siteTitle');
+  // Hero（标题在 HTML 里已直接写死，不动态拼接避免与水彩描边样式冲突）
+  $('heroSubtitle').textContent = t('ui.heroSubtitle');
+  // Stats bar spans (with [data-i18n])
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (key) el.textContent = t(key);
+  });
+  // 首页搜索框
+  if (searchInputHome) searchInputHome.placeholder = t('ui.searchHomePlaceholder');
+  // 内嵌搜索按钮文字（移动端只显示图标）
+  const btnHome = $('searchBtnHomeText'); if (btnHome) btnHome.textContent = t('ui.searchBtn');
+  // Footer: fixed as requested (NOT translated)
+  const ft = t('ui.footer');
+  const el = $('footerText');
+  if (el) {
+    if (/<[aA]\s/.test(ft)) el.innerHTML = ft;
+    else el.textContent = ft;
+  }
+  // Modal labels (if modal open, we re-render via re-openModal after lang switch)
+  $('mSkuLabel').textContent  = t('ui.skuLabel');
+  $('mPriceLabel').textContent= t('ui.priceLabel');
+  $('mStockLabel').textContent= t('ui.stockLabel');
+  $('mDescLabel').textContent = t('ui.descLabel');
+  $('copySkuText').textContent= t('ui.copySkuBtn');
+  $('copyHint').textContent   = t('ui.copiedHint');
+  const clBtn = $('closeModalText'); if (clBtn) clBtn.textContent = t('ui.closeModalBtn');
+  // Update lang switcher active visual
+  document.querySelectorAll('#langSwitcher .lang-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === currentLang);
+    b.setAttribute('aria-pressed', b.dataset.lang === currentLang ? 'true' : 'false');
+  });
+  // Update <html lang> for browsers
+  document.documentElement.lang = (currentLang === 'zh') ? 'zh-CN' : currentLang;
+  // 客服与售后：按当前语言刷新后台配置文案（settings 可能尚未加载，loadSettings 后会再刷一次）
+  applyServiceContent();
+}
+
+/* ---------- Language switching ---------- */
+function setLanguage(lang, persist=true) {
+  // WHITELIST: only allow zh / es (EN permanently removed per user request)
+  // Any other value (including old localStorage 'en') auto-falls back to Español
+  if (lang !== 'zh' && lang !== 'es') lang = 'es';
+  currentLang = lang;
+  if (persist) {
+    try { localStorage.setItem(LANG_KEY, lang); } catch(_) {}
+  }
+  updateStaticTexts();
+  renderFeatured();
+  // 动态模块按新语言重绘（预售说明/TOP3 名称/好评/社区链接/客服文案）
+  renderHomeModules();
+  paintTopSales();
+  // If modal is open, refresh its localized texts
+  if (state.activeId != null) openModal(state.activeId);
+}
+
+/* ---------- Stock helpers ---------- */
+function stockBadge(stock) {
+  if (stock <= 0)  return { cls:'badge-outstock', label:t('ui.stockOut') };
+  if (stock <= 5)  return { cls:'badge-lowstock', label:t('ui.stockLow') };
+  return { cls:'badge-instock', label:t('ui.stockIn') };
+}
+/* 角标：根据 tags 决定 现货/预售/余量/限量/通贩/尾款；
+   tags 取值（与后台迁移 SQL 一致）：new/bestseller/presale/remain/limited/general/balance/official/doujin */
+function cornerBadge(p) {
+  const tags = String(p?.tags || '').toLowerCase();
+  if (tags.includes('presale')) return { cls:'bc-presale', label:'Preventa' };
+  if (tags.includes('remain'))  return { cls:'bc-remain',  label:'Últimas piezas' };
+  if (tags.includes('limited')) return { cls:'bc-limited', label:'Edición limitada' };
+  if (tags.includes('balance')) return { cls:'bc-balance', label:'Saldo' };
+  if (tags.includes('general')) return { cls:'bc-general', label:'Venta general' };
+  if ((p?.stock ?? 0) > 5)      return { cls:'bc-instock', label:'En stock' };
+  if ((p?.stock ?? 0) > 0)      return { cls:'bc-remain',  label:'Últimas piezas' };
+  return { cls:'bc-presale', label:'Próximamente' };
+}
+function catMeta(key) {
+  return CATEGORIES.find(c => c.key === key) || CATEGORIES[0];
+}
+/* ---------- Currency helpers（全站统一墨西哥比索 MXN，不再有 EUR/USD 切换和汇率） ---------- */
+const CUR_KEY = 'haven_shop_currency';
+let currentCur = 'MXN';   // 全站固定 MXN
+function setCurrency(cur, _persist=false){
+  currentCur = 'MXN';
+}
+function priceOf(p){
+  return Number(p?.price_mxn ?? 0);
+}
+function fmtPrice(n) {
+  // 墨西哥比索：$符号 + MXN 后缀
+  return '$' + Number(n||0).toFixed(2) + ' MXN';
+}
+
+/* ---------- Product card ---------- */
+function productCardHTML(p) {
+  const badge = stockBadge(p.stock);
+  const corner = cornerBadge(p);
+  const cm = catMeta(p.category);
+  const name = prodName(p);
+  const desc = prodDesc(p);
+  return `
+  <div class="prod-card group" data-id="${p.id}">
+    <div class="relative bg-gradient-to-br from-macaron-milk to-white overflow-hidden">
+      <img src="${p.image}" alt="${name}"
+           loading="lazy"
+           class="w-full aspect-square object-contain transition duration-300 group-hover:scale-105" />
+      <span class="badge-corner ${corner.cls}">${corner.label}</span>
+      <div class="absolute top-2.5 right-2.5 rounded-full text-xs font-bold sku-tag bg-white/90 text-[#1F5C8A] px-2.5 py-1 shadow-sm border border-white">
+        ${p.sku}
+      </div>
+      <div class="absolute bottom-2.5 left-2.5 rounded-full text-[11px] font-cute font-semibold bg-white/90 text-[#1F5C8A] px-2.5 py-1 shadow-sm flex items-center gap-1 border border-white">
+        <span>${cm.icon}</span><span>${catName(cm.key)}</span>
+      </div>
+    </div>
+
+    <div class="p-3.5 md:p-4">
+      <h3 class="font-cute font-bold text-[#1F5C8A] text-sm md:text-base leading-snug line-clamp-2 min-h-[2.6em]">${name}</h3>
+      <div class="mt-2 flex items-end justify-between gap-2">
+        <div>
+          <div class="font-cute font-bold text-[#A03370] text-lg md:text-xl">${fmtPrice(priceOf(p))}</div>
+          <div class="text-[11px] text-[#5A6F80] mt-0.5">
+            ${t('ui.stockPrefix')} <span class="font-bold ${p.stock<=0?'text-[#A03370]':p.stock<=5?'text-amber-600':'text-emerald-600'}">${p.stock}</span>
+          </div>
+        </div>
+        <button class="shrink-0 rounded-full bg-gradient-to-r from-macaron-sky to-macaron-bluedeep text-white text-xs md:text-sm font-cute font-semibold px-3 py-2 shadow hover:opacity-90 min-h-[42px]">
+          ${t('ui.viewBtn')}
+        </button>
+      </div>
+      <p class="mt-2 text-xs text-[#3F4E60]/80 line-clamp-2 leading-relaxed">${desc}</p>
+    </div>
+  </div>`;
+}
+
+/* ---------- Modal ---------- */
+function openModal(id) {
+  const p = PRODUCTS.find(x => x.id === id);
+  if (!p) return;
+  state.activeId = id;
+  const b = stockBadge(p.stock);
+  const cm = catMeta(p.category);
+  $('mImg').src        = p.image;
+  $('mImg').alt        = prodName(p);
+  $('mCatIcon').textContent = cm.icon;
+  $('mCatName').textContent = catName(cm.key);
+  $('mName').textContent    = prodName(p);
+  $('mSku').textContent     = p.sku;
+  $('mPrice').textContent   = fmtPrice(priceOf(p));
+  $('mStock').textContent   = p.stock;
+  const sb = $('mStockBadge');
+  sb.className = 'text-xs font-semibold px-2.5 py-1 rounded-full ' + b.cls;
+  sb.textContent = b.label;
+  $('mDesc').textContent    = prodDesc(p);
+  $('copyHint').style.opacity = 0;
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  // iOS mobile: scroll modal to top when opened
+  try { modal.querySelector('.modal-card').scrollTop = 0; } catch(_) {}
+}
+function closeModal() {
+  modal.classList.remove('open');
+  document.body.style.overflow = '';
+  state.activeId = null;
+}
+$('closeModal').addEventListener('click', closeModal);
+modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeModal();
+  // 「/」快捷键：聚焦首页顶部大搜索框
+  if (e.key === '/') {
+    const active = searchInputHome;
+    if (active && document.activeElement !== active) {
+      e.preventDefault(); active.focus();
+    }
+  }
+});
+$('copySku').addEventListener('click', async () => {
+  const p = PRODUCTS.find(x => x.id === state.activeId);
+  if (!p) return;
+  try {
+    await navigator.clipboard.writeText(p.sku);
+  } catch (_) {
+    // Fallback for clipboard blocked
+    const ta = document.createElement('textarea');
+    ta.value = p.sku; document.body.appendChild(ta);
+    ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+  }
+  // Re-pick translated hint (handles language change between open + copy)
+  const hint = $('copyHint');
+  hint.textContent = t('ui.copiedHint');
+  hint.style.opacity = 1;
+  setTimeout(() => hint.style.opacity = 0, 1400);
+});
+
+/* ---------- Language switcher bindings (home) ---------- */
+document.querySelectorAll('#langSwitcher .lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => setLanguage(btn.dataset.lang, true));
+});
+
+/* ---------- Search：首页提交→携带关键词跳转独立目录页 catalogo.html ---------- */
+$('searchFormHome').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const q = (searchInputHome ? searchInputHome.value : '').trim();
+  try {
+    if (q) sessionStorage.setItem('catalog_seed', JSON.stringify({ q, focus: 1 }));
+  } catch(_) {}
+  location.href = '/catalogo';
+});
+
+/* =========================================================================
+   站点内容配置（GET /api/settings）：好评 JSON / 社区链接 JSON / 客服售后文案
+   ========================================================================= */
+let SITE_SETTINGS = {};
+async function loadSettings() {
+  const j = await fetchJSON('/api/settings', null);
+  // 兼容两种返回结构：{ok,data:{map}}（当前接口）与 {map}（历史直出），解包错误会让配置整体为空
+  const m = (j && j.data && j.data.map) ? j.data.map : (j && j.map ? j.map : null);
+  if (m) SITE_SETTINGS = m;
+}
+
+function parseJsonArr(str) {
+  try {
+    const v = JSON.parse(str || '[]');
+    return Array.isArray(v) ? v : [];
+  } catch (_) { return []; }
+}
+
+function escHtml(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+/* ---------- 客服与售后（全局区块，两个视图都显示） ---------- */
+function applyServiceContent() {
+  const sec = $('serviceSection');
+  if (!sec) return;
+  const zhMode = (currentLang === 'zh');
+  const guarantee = zhMode ? (SITE_SETTINGS.cs_guarantee_zh || SITE_SETTINGS.cs_guarantee_es || '')
+                           : (SITE_SETTINGS.cs_guarantee_es || SITE_SETTINGS.cs_guarantee_zh || '');
+  const shipping  = zhMode ? (SITE_SETTINGS.cs_shipping_zh  || SITE_SETTINGS.cs_shipping_es  || '')
+                           : (SITE_SETTINGS.cs_shipping_es  || SITE_SETTINGS.cs_shipping_zh  || '');
+  const waNum     = SITE_SETTINGS.cs_contact_whatsapp || '';
+  const waUrl     = SITE_SETTINGS.cs_contact_url || '';
+  const hours     = zhMode ? (SITE_SETTINGS.cs_contact_hours_zh || '') : (SITE_SETTINGS.cs_contact_hours_es || '');
+  const addr      = zhMode ? (SITE_SETTINGS.cs_address_zh || SITE_SETTINGS.cs_address_es || '')
+                           : (SITE_SETTINGS.cs_address_es || SITE_SETTINGS.cs_address_zh || '');
+  const mapsUrl   = SITE_SETTINGS.cs_maps_url || '';
+
+  const gEl = sec.querySelector('[data-i18n-key="cs_guarantee"]');
+  const sEl = sec.querySelector('[data-i18n-key="cs_shipping"]');
+  if (gEl) gEl.textContent = guarantee;
+  if (sEl) sEl.textContent = shipping;
+
+  const waLink = $('serviceWaLink'), waNumEl = $('serviceWaNum');
+  if (waNumEl) waNumEl.textContent = waNum;
+  if (waLink) {
+    if (waUrl && waNum) { waLink.href = waUrl; waLink.style.display = ''; }
+    else { waLink.style.display = 'none'; }
+  }
+  const hoursEl = $('serviceHours');
+  if (hoursEl) hoursEl.textContent = hours;
+  const addrEl = $('serviceAddr'), mapsEl = $('serviceMapsLink');
+  if (addrEl) addrEl.textContent = addr;
+  if (mapsEl) {
+    if (mapsUrl && addr) { mapsEl.href = mapsUrl; mapsEl.style.display = ''; }
+    else { mapsEl.style.display = 'none'; }
+  }
+  // 有任一内容才显示该区块
+  sec.hidden = !(guarantee || shipping || waNum || addr);
+}
+
+/* ---------- ① 预售专区：取带 presale_arrive_date 且未过期的商品，数量由后台 presale_max 控制 ---------- */
+const PRESALE_GRADS = [
+  'linear-gradient(135deg, rgba(114,208,255,.55), rgba(207,240,227,.55))',
+  'linear-gradient(135deg, rgba(255,214,231,.55), rgba(255,244,181,.55))',
+  'linear-gradient(135deg, rgba(224,209,251,.55), rgba(114,208,255,.55))',
+  'linear-gradient(135deg, rgba(255,244,181,.55), rgba(224,209,251,.55))',
+  'linear-gradient(135deg, rgba(207,240,227,.55), rgba(255,214,231,.55))',
+  'linear-gradient(135deg, rgba(114,208,255,.55), rgba(255,244,181,.55))',
+];
+function presaleMax() {
+  const n = Math.floor(Number(SITE_SETTINGS.presale_max));
+  return Number.isFinite(n) ? Math.min(6, Math.max(1, n)) : 3;
+}
+function presaleProducts() {
+  const today = new Date().toISOString().slice(0, 10);
+  return PRODUCTS
+    .filter(p => p.presale_arrive_date && p.presale_arrive_date >= today)
+    .sort((a, b) => a.presale_arrive_date.localeCompare(b.presale_arrive_date))
+    .slice(0, presaleMax());
+}
+function renderPresales() {
+  const grid = $('presaleGrid');
+  if (!grid) return;
+  // 标题/角标：后台配置优先，未配置时回退到内置 i18n 文案
+  const zhMode = (currentLang === 'zh');
+  const cfgTitle = zhMode ? (SITE_SETTINGS.presale_title_zh || '') : (SITE_SETTINGS.presale_title_es || '');
+  const cfgBadge = zhMode ? (SITE_SETTINGS.presale_badge_zh || '') : (SITE_SETTINGS.presale_badge_es || '');
+  const titleEl = $('presaleTitle'), badgeEl = $('presaleBadge');
+  if (titleEl) titleEl.textContent = cfgTitle || t('ui.presaleTitle');
+  if (badgeEl) badgeEl.textContent = cfgBadge || t('ui.presaleBadge');
+  const list = presaleProducts();
+  $('presaleSection').hidden = list.length === 0;
+  if (!list.length) return;
+  grid.innerHTML = list.map((p, i) => {
+    const note = (currentLang === 'zh')
+      ? (p.presale_note_zh || p.presale_note_es || t('ui.presaleNoteDefault'))
+      : (p.presale_note_es || p.presale_note_zh || t('ui.presaleNoteDefault'));
+    const dstr = p.presale_arrive_date;
+    return `
+    <div class="rounded-2xl border-2 border-white p-4" style="background:${PRESALE_GRADS[i % PRESALE_GRADS.length]}">
+      <div class="flex items-center justify-between gap-2">
+        <span class="text-xs text-[#2E6B96] font-semibold">✨ Preventa · ${escHtml(p.sku)}</span>
+        <span class="text-[11px] font-bold text-[#A03370] bg-white/80 rounded-full px-2 py-0.5">${escHtml(dstr)}</span>
+      </div>
+      <div class="mt-1 font-cute font-bold text-[#1F5C8A]">${escHtml(prodName(p))}</div>
+      <div class="presale-countdown mt-2 font-mono text-sm text-[#A03370]" data-target="${dstr}">⏳ --</div>
+      <div class="text-[11px] text-[#5A6F80] mt-1">${escHtml(note)}</div>
+    </div>`;
+  }).join('');
+  tickPresaleCountdowns();
+}
+function tickPresaleCountdowns() {
+  const now = Date.now();
+  document.querySelectorAll('.presale-countdown[data-target]').forEach(el => {
+    const target = new Date(el.dataset.target + 'T00:00:00').getTime();
+    if (!target || isNaN(target)) return;
+    let diff = Math.max(0, target - now);
+    const d = Math.floor(diff / 86400000); diff -= d * 86400000;
+    const h = Math.floor(diff / 3600000);  diff -= h * 3600000;
+    const m = Math.floor(diff / 60000);    diff -= m * 60000;
+    const s = Math.floor(diff / 1000);
+    el.textContent = `⏳ ${d}d ${String(h).padStart(2,'0')}h ${String(m).padStart(2,'0')}m ${String(s).padStart(2,'0')}s`;
+  });
+}
+setInterval(tickPresaleCountdowns, 1000);
+
+/* ---------- ② 本周销量 TOP3：GET /api/top-sales ---------- */
+const RANK_BG = [
+  'bg-gradient-to-r from-macaron-goose/70 to-white/60',
+  'bg-gradient-to-r from-macaron-pink/70 to-white/60',
+  'bg-gradient-to-r from-macaron-mint/70 to-white/60',
+];
+let TOP_SALES_CACHE = [];   // 拉取结果缓存，语言切换时仅重绘不重复请求
+async function renderTopSales() {
+  const ol = $('topSalesList');
+  if (!ol) return;
+  const j = await fetchJSON('/api/top-sales', { mode: 'auto', items: [] });
+  // 兼容 {ok,data:{items}} 包裹结构与裸 {items} 结构；失败时缓存为空数组，不阻塞其余模块
+  const d = (j && j.data) ? j.data : j;
+  TOP_SALES_CACHE = (d && Array.isArray(d.items)) ? d.items.slice(0, 3) : [];
+  paintTopSales();
+}
+function paintTopSales() {
+  const ol = $('topSalesList');
+  if (!ol) return;
+  const items = TOP_SALES_CACHE;
+  $('topSalesSection').hidden = items.length === 0;
+  if (!items.length) return;
+  ol.innerHTML = items.map((it, i) => {
+    const name = (currentLang === 'zh')
+      ? (it.name_zh || it.name_es || '')
+      : (it.name_es || it.name_zh || '');
+    return `
+    <li class="flex items-center gap-3 rounded-2xl ${RANK_BG[i]} p-3 cursor-pointer" data-id="${Number(it.id)}">
+      <span class="rank-n rank-${i + 1}">${i + 1}</span>
+      <img src="${escHtml(it.image_url || 'https://picsum.photos/seed/' + encodeURIComponent(it.sku || it.id) + '/120/120')}" alt="" loading="lazy"
+           onerror="this.style.visibility='hidden'"
+           class="w-11 h-11 rounded-xl object-cover bg-white border border-white shadow-sm shrink-0">
+      <span class="text-sm font-cute font-bold text-[#1F5C8A] leading-snug min-w-0 truncate flex-1">${escHtml(name)}</span>
+      ${it.sold != null ? `<span class="shrink-0 text-[11px] md:text-xs font-semibold text-[#A03370] bg-white/80 rounded-full px-2.5 py-1">×${Number(it.sold)}</span>` : ''}
+      <span class="shrink-0 text-pink-500 font-bold text-sm">$${(Number(it.price) || 0).toFixed(2)} MXN</span>
+    </li>`;
+  }).join('');
+  ol.querySelectorAll('li').forEach(li => {
+    li.addEventListener('click', () => openModal(+li.dataset.id));
+  });
+}
+
+/* ---------- ③ 精选橱窗：前 8 件在售商品（2×4） ---------- */
+function renderFeatured() {
+  const grid = $('gridFeatured');
+  if (!grid) return;
+  const list = PRODUCTS.filter(p => p.stock > 0).slice(0, 8);
+  const cnt = $('featCount');
+  if (cnt) cnt.textContent = list.length;
+  grid.innerHTML = list.map(productCardHTML).join('');
+  grid.querySelectorAll('.prod-card').forEach(card => {
+    card.addEventListener('click', () => openModal(+card.dataset.id));
+  });
+}
+
+/* ---------- ④ 社区好评：后台 reviews_json，自动滚动跑马灯 ---------- */
+function reviewCardHTML(r) {
+  const txt = (currentLang === 'zh') ? (r.text_zh || r.text_es || '') : (r.text_es || r.text_zh || '');
+  const stars = '★'.repeat(Math.min(5, Math.max(1, Number(r.stars) || 5))) +
+                '☆'.repeat(Math.max(0, 5 - Math.min(5, Math.max(1, Number(r.stars) || 5))));
+  return `
+    <div class="w-[240px] md:w-[270px] rounded-2xl bg-white/85 p-3 border-2 border-white shadow-sm">
+      <div class="flex items-center justify-between gap-2">
+        <div class="text-xs font-bold text-[#2E6B96]">${escHtml(r.name || '⭐')}</div>
+        <div class="text-[11px] text-amber-500 whitespace-nowrap">${stars}</div>
+      </div>
+      <p class="text-[12px] text-[#3F4E60] mt-1 leading-relaxed">${escHtml(txt)}</p>
+    </div>`;
+}
+function renderReviews() {
+  const grid = $('reviewsGrid');
+  if (!grid) return;
+  const list = parseJsonArr(SITE_SETTINGS.reviews_json);
+  $('reviewsSection').hidden = list.length === 0;
+  if (!list.length) return;
+  // 双份内容拼接：向左平移一份宽度后无缝循环；条数少（≤4）时滚动慢一些
+  grid.innerHTML = [...list, ...list].map(reviewCardHTML).join('');
+  // 动画时长随内容量自适应：每条约 3.2s，最少 24s，避免太快看不清
+  grid.style.setProperty('--marquee-dur', Math.max(24, list.length * 3.2) + 's');
+}
+
+/* ---------- ⑤ 加入社区：后台 community_links_json ---------- */
+function renderCommunity() {
+  const box = $('communityLinks');
+  if (!box) return;
+  const list = parseJsonArr(SITE_SETTINGS.community_links_json);
+  $('communitySection').hidden = list.length === 0;
+  if (!list.length) return;
+  box.innerHTML = list.map((l, i) => {
+    const title = (currentLang === 'zh') ? (l.title_zh || l.title_es || '') : (l.title_es || l.title_zh || '');
+    const icons = ['📸', '👍', '✈️', '💬'];
+    const icon = l.icon ? `<i class="${escHtml(l.icon)}"></i>` : icons[i % icons.length];
+    return `
+    <a href="${escHtml(l.url || '#')}" target="_blank" rel="noopener"
+       class="px-4 py-2 rounded-full bg-white/85 text-[#6A3FB5] text-xs md:text-sm font-semibold hover:opacity-90 transition inline-flex items-center gap-1.5">
+      <span>${icon}</span><span>${escHtml(title)}</span>
+    </a>`;
+  }).join('');
+}
+
+/* ---------- 首页全部动态模块统一渲染 ---------- */
+function renderHomeModules() {
+  renderFeatured();
+  renderPresales();
+  renderReviews();
+  renderCommunity();
+  applyServiceContent();
+}
+
+/* ---------- Initial render ---------- */
+(async function init() {
+  // 1. 全站统一墨西哥比索（MXN），不再需要拉取汇率/货币设置；清掉旧版本 localStorage 偏好
+  try { localStorage.removeItem(CUR_KEY); } catch(_){}
+  setCurrency('MXN', false);
+  // 2. 先加载数据（/api 优先，失败用本地 MOCK）
+  await loadData();
+  // 3. 站点内容配置（好评/社区链接/客服售后），失败不影响主流程
+  await loadSettings();
+  // 4. 语言初始化（per user request: DEFAULT = Español, SECONDARY = 中文 only if user chose before）
+  let lang = null;
+  try { lang = localStorage.getItem(LANG_KEY); } catch(_) {}
+  if (lang !== 'zh' && lang !== 'es') {
+    lang = 'es';   // DEFAULT = Español for all new/first-time visitors, regardless of browser locale
+  }
+  setLanguage(lang, false);
+  // 5. 首页动态模块（精选/预售/TOP3/好评/社区/客服）
+  renderHomeModules();
+  renderTopSales();
+})();
+</script>
+</body>
+</html>

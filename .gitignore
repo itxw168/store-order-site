@@ -1,0 +1,21 @@
+# ===== 依赖与本地状态（不入库）=====
+node_modules/
+.wrangler/
+.dev.vars
+.env
+.env.*
+
+# ===== 内部/专属文件（本地保留，不提交）=====
+_backup_oss_20261006/
+修改报告_20260823.md
+demo/
+二次元周边店LOGO设计.png
+logo-transparent.png
+_logo_process.ps1
+
+# ===== 系统与编辑器 =====
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log

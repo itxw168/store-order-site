@@ -1,0 +1,60 @@
+# ================================================================
+#  Haven Shop · wrangler.toml 配置模板
+#  用途：Cloudflare Pages + Functions + D1 + R2 绑定声明
+#
+#  ⚠️ 修改说明：
+#  1. 所有 <<< 占位符 >>> 请替换为你 Cloudflare 后台的真实值
+#  2. Secrets（ADMIN_PASSWORD 等）不要写在这个文件里！
+#     用命令行： wrangler pages secret put ADMIN_PASSWORD
+#     或在后台： Pages 项目 → Settings → Environment variables → Encrypted secrets
+# ================================================================
+
+# -------- Pages 项目信息 --------
+name = "demo"
+compatibility_date = "2024-09-01"
+compatibility_flags = ["nodejs_compat"]
+
+# -------- Pages Functions 目录（不用改）--------
+pages_build_output_dir = "."            # 当前目录即根，index.html / admin / functions 直接被 Pages 识别
+
+# ================================================================
+#  绑定（Bindings）- Production 环境
+#  变量名严格：env.DB / env.IMGS / env.R2_PUBLIC_PREFIX，functions 里直接按这个名访问
+# ================================================================
+[env.production]
+d1_databases = [
+  { binding = "DB", database_id = "your-d1-database-id", database_name = "haven-db" }
+]
+r2_buckets = [
+  { binding = "BUCKET", bucket_name = "haven-shop-imgs" }
+]
+[env.production.vars]
+R2_PUBLIC_PREFIX = "https://your-r2-public-domain.example.com/"
+
+# 顶层 vars 供 preview 环境使用（避免部署 preview 时 R2 前缀丢失）
+[vars]
+R2_PUBLIC_PREFIX = "https://your-r2-public-domain.example.com/"
+
+# ================================================================
+#  加密 Secrets（不在本文件里写，命令行或后台设置）：
+# ================================================================
+# ADMIN_PASSWORD            后台管理登录密码（请设置一个强密码，勿使用示例值）
+#                           设置命令：
+#                           wrangler pages secret put ADMIN_PASSWORD -e production
+#
+# ADMIN_TOKEN_SECRET        可选，JWT 签名种子，不设置也能工作（代码里自动 fallback 用 ADMIN_PASSWORD 签）
+#                           设置命令：
+#                           wrangler pages secret put ADMIN_TOKEN_SECRET -e production
+
+# ================================================================
+#  Preview 环境（可选，复制一份绑定即可，不做日常预览的话可以删掉）
+# ================================================================
+# [env.preview]
+# d1_databases = [
+#   { binding = "DB", database_id = "<<< 预览环境 D1 ID >>>", database_name = "haven-db-preview" }
+# ]
+# r2_buckets = [
+#   { binding = "IMGS", bucket_name = "<<< 预览环境 R2 bucket >>>" }
+# ]
+# [env.preview.vars]
+# R2_PUBLIC_PREFIX = "<<< 预览环境 R2 前缀 >>>"

@@ -1,0 +1,7 @@
+# Cloudflare Pages 路由说明
+# 「全部商品目录」是真正的独立页面：物理文件 catalogo.html。
+# Cloudflare Pages 资源层默认开启「美化 URL」（html_handling: auto-trailing-slash）：
+#   · /catalogo        → 直接返回 catalogo.html 内容（地址栏保持干净路径）
+#   · /catalogo.html   → 308 跳转到 /catalogo
+# 因此无需任何 _redirects 重写规则。切勿添加 /* 全局兜底——_redirects 先于静态资源匹配，
+# 会把未知路径（含 /admin 等）也吞掉。
