@@ -19,6 +19,17 @@
 
 ---
 
+## 🔗 在线演示
+
+| 入口 | 地址 | 说明 |
+|---|---|---|
+| 🌐 前台（顾客端） | **https://demo.itxw.asia/** | 西语 / 中文切换、分类浏览、实时搜索、分享卡片 |
+| 🛠 后台管理 | **https://demo.itxw.asia/admin/** | 体验密码：`have@2026` |
+
+> ⚠️ 演示后台为公开体验环境，请勿恶意修改或删除演示数据。
+
+---
+
 ## ✨ 功能特性
 
 ### 前台（`index.html` + `catalogo.html`）
@@ -204,6 +215,8 @@ It requires **no server of your own**: build-free, dependency-free, and fully ho
 - Single-file admin SPA: dashboard, products, categories, inventory & sales logs, site content, printable A4 catalog, storage tools & JSON backup
 - Stateless JWT-lite auth (HMAC-SHA256 via WebCrypto), unified JSON API, R2 presigned direct upload
 - MIT licensed and easy to fork & customize (no build step)
+
+**Live demo**: [Storefront](https://demo.itxw.asia/) · [Admin panel](https://demo.itxw.asia/admin/) (demo password: `have@2026`)
 
 **Quick start**: `npm install` → `npx wrangler d1 migrations apply haven-db --local` → create `.dev.vars` with `ADMIN_PASSWORD=...` → `npx wrangler pages dev . --local`.
 
